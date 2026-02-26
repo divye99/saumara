@@ -1,3 +1,5 @@
+export const dynamic = 'force-dynamic'
+
 import { prisma } from '@/lib/prisma'
 import { notFound } from 'next/navigation'
 import ProductCard from '@/components/ProductCard'
@@ -55,9 +57,6 @@ async function getSubcategories(category: string): Promise<string[]> {
   return results.map(r => r.subcategory).filter((s): s is string => s !== null)
 }
 
-export async function generateStaticParams() {
-  return Object.keys(categoryConfig).map(category => ({ category }))
-}
 
 export default async function CollectionPage({ params, searchParams }: PageProps) {
   const config = categoryConfig[params.category]
