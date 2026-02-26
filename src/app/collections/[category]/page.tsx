@@ -58,7 +58,15 @@ async function getSubcategories(category: string): Promise<string[]> {
 
   if (error || !data) return []
 
-  const unique = [...new Set(data.map((r: { subcategory: string | null }) => r.subcategory).filter((s): s is string => s !== null))]
+  const seen: Record<string, boolean> = {}
+  const unique: string[] = []
+  for (const row of data as { subcategory: string | null }[]) {
+    const s = row.subcategory
+    if (s !== null && !seen[s]) {
+      seen[s] = true
+      unique.push(s)
+    }
+  }
   return unique
 }
 
