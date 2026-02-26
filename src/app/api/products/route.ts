@@ -1,5 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server'
-import { prisma } from '@/lib/prisma'
+import { supabase } from '@/lib/supabase'
 
 export async function GET(request: NextRequest) {
   const { searchParams } = new URL(request.url)
@@ -10,34 +10,25 @@ export async function GET(request: NextRequest) {
 
   try {
     if (slug) {
-      const product = await prisma.product.findUnique({ where: { slug } })
-      if (!product) return NextResponse.json({ product: null }, { status: 404 })
-      return NextResponse.json({
-        product: {
-          ...product,
-          images: product.images as string[],
-          createdAt: product.createdAt.toISOString(),
-        },
-      })
+      const { data, error } = await supabase
+        .from('products')
+        .select('*')
+        .eq('slug', slug)
+        .single()
+
+      if (error || !data) return NextResponse.json({ product: null }, { status: 404 })
+      return NextResponse.json({ product: data })
     }
 
-    const where: Record<string, unknown> = {}
-    if (category) where.category = category
-    if (bestseller === 'true') where.isBestseller = true
+    let query = supabase.from('products').select('*').order('createdAt', { ascending: true }).limit(limit)
 
-    const products = await prisma.product.findMany({
-      where,
-      take: limit,
-      orderBy: { createdAt: 'asc' },
-    })
+    if (category) query = query.eq('category', category)
+    if (bestseller === 'true') query = query.eq('isBestseller', true)
 
-    return NextResponse.json({
-      products: products.map(p => ({
-        ...p,
-        images: p.images as string[],
-        createdAt: p.createdAt.toISOString(),
-      })),
-    })
+    const { data, error } = await query
+    if (error) throw error
+
+    return NextResponse.json({ products: data || [] })
   } catch (error) {
     console.error(error)
     return NextResponse.json({ error: 'Failed to fetch products' }, { status: 500 })

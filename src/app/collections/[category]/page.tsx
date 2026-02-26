@@ -1,6 +1,6 @@
 export const dynamic = 'force-dynamic'
 
-import { prisma } from '@/lib/prisma'
+import { supabase } from '@/lib/supabase'
 import { notFound } from 'next/navigation'
 import ProductCard from '@/components/ProductCard'
 import { Product } from '@/types'
@@ -30,31 +30,36 @@ const categoryConfig: Record<string, { title: string; description: string; hero:
 }
 
 async function getProducts(category: string, sort?: string, sub?: string): Promise<Product[]> {
-  const orderBy: { price?: 'asc' | 'desc'; createdAt?: 'asc' | 'desc' } = {}
-  if (sort === 'price-asc') orderBy.price = 'asc'
-  else if (sort === 'price-desc') orderBy.price = 'desc'
-  else orderBy.createdAt = 'asc'
+  let query = supabase
+    .from('products')
+    .select('*')
+    .eq('category', category)
 
-  const where: { category: string; subcategory?: string } = { category }
-  if (sub) where.subcategory = sub
+  if (sub) query = query.eq('subcategory', sub)
 
-  const products = await prisma.product.findMany({ where, orderBy })
+  if (sort === 'price-asc') query = query.order('price', { ascending: true })
+  else if (sort === 'price-desc') query = query.order('price', { ascending: false })
+  else query = query.order('createdAt', { ascending: true })
 
-  return products.map(p => ({
-    ...p,
-    images: p.images as string[],
-    subcategory: p.subcategory ?? null,
-    createdAt: p.createdAt.toISOString(),
-  }))
+  const { data, error } = await query
+  if (error) {
+    console.error('Supabase error:', error)
+    return []
+  }
+  return (data || []) as Product[]
 }
 
 async function getSubcategories(category: string): Promise<string[]> {
-  const results = await prisma.product.findMany({
-    where: { category },
-    select: { subcategory: true },
-    distinct: ['subcategory'],
-  })
-  return results.map(r => r.subcategory).filter((s): s is string => s !== null)
+  const { data, error } = await supabase
+    .from('products')
+    .select('subcategory')
+    .eq('category', category)
+    .not('subcategory', 'is', null)
+
+  if (error || !data) return []
+
+  const unique = [...new Set(data.map((r: { subcategory: string | null }) => r.subcategory).filter((s): s is string => s !== null))]
+  return unique
 }
 
 

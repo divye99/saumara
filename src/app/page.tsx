@@ -2,24 +2,25 @@ export const dynamic = 'force-dynamic'
 
 import Image from 'next/image'
 import Link from 'next/link'
-import { prisma } from '@/lib/prisma'
+import { supabase } from '@/lib/supabase'
 import ProductCard from '@/components/ProductCard'
 import { Product } from '@/types'
 import { Leaf, Recycle, Award, Heart } from 'lucide-react'
 
 async function getBestsellers(): Promise<Product[]> {
   try {
-    const products = await prisma.product.findMany({
-      where: { isBestseller: true },
-      take: 8,
-      orderBy: { createdAt: 'asc' },
-    })
-    return products.map(p => ({
-      ...p,
-      images: p.images as string[],
-      subcategory: p.subcategory ?? null,
-      createdAt: p.createdAt.toISOString(),
-    }))
+    const { data, error } = await supabase
+      .from('products')
+      .select('*')
+      .eq('isBestseller', true)
+      .order('createdAt', { ascending: true })
+      .limit(8)
+
+    if (error) {
+      console.error('Supabase error:', error)
+      return []
+    }
+    return (data || []) as Product[]
   } catch {
     return []
   }

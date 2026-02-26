@@ -1,5 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server'
-import { prisma } from '@/lib/prisma'
+import { supabase } from '@/lib/supabase'
 
 function generateOrderNumber(): string {
   const timestamp = Date.now().toString(36).toUpperCase()
@@ -25,8 +25,9 @@ export async function POST(request: NextRequest) {
 
     const orderNumber = generateOrderNumber()
 
-    const order = await prisma.order.create({
-      data: {
+    const { data, error } = await supabase
+      .from('orders')
+      .insert({
         orderNumber,
         customerName,
         customerEmail,
@@ -39,10 +40,13 @@ export async function POST(request: NextRequest) {
         status: 'confirmed',
         razorpayOrderId,
         razorpayPaymentId,
-      },
-    })
+      })
+      .select()
+      .single()
 
-    return NextResponse.json({ order, orderNumber: order.orderNumber })
+    if (error) throw error
+
+    return NextResponse.json({ order: data, orderNumber })
   } catch (error) {
     console.error(error)
     return NextResponse.json({ error: 'Failed to create order' }, { status: 500 })
@@ -55,11 +59,23 @@ export async function GET(request: NextRequest) {
 
   try {
     if (orderNumber) {
-      const order = await prisma.order.findUnique({ where: { orderNumber } })
-      return NextResponse.json({ order })
+      const { data, error } = await supabase
+        .from('orders')
+        .select('*')
+        .eq('orderNumber', orderNumber)
+        .single()
+
+      if (error) return NextResponse.json({ order: null })
+      return NextResponse.json({ order: data })
     }
-    const orders = await prisma.order.findMany({ orderBy: { createdAt: 'desc' } })
-    return NextResponse.json({ orders })
+
+    const { data, error } = await supabase
+      .from('orders')
+      .select('*')
+      .order('createdAt', { ascending: false })
+
+    if (error) throw error
+    return NextResponse.json({ orders: data || [] })
   } catch (error) {
     console.error(error)
     return NextResponse.json({ error: 'Failed to fetch orders' }, { status: 500 })
