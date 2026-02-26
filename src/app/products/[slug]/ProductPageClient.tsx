@@ -5,7 +5,7 @@ import Image from 'next/image'
 import Link from 'next/link'
 import { useCart } from '@/context/CartContext'
 import { Product } from '@/types'
-import { ShoppingBag, Heart, ChevronDown, ChevronRight, Leaf, Recycle, Award, Wind, Droplets } from 'lucide-react'
+import { ShoppingBag, Heart, ChevronDown, ChevronRight, Leaf, Recycle, Award, Wind, Droplets, ArrowRight } from 'lucide-react'
 import toast from 'react-hot-toast'
 
 const categoryLabel: Record<string, string> = {
@@ -52,6 +52,101 @@ export default function ProductPageClient({
   const keyIngredient = product.ingredients
     ? product.ingredients.split('\n')[0]?.split(',')[0]?.split('.')[0]?.trim() || ''
     : ''
+
+  // Build ingredient spotlights from the product's actual ingredient list
+  // Map common ingredients to their botanical images and benefit copy
+  const ingredientData: Record<string, { image: string; source: string; benefit: string }> = {
+    'Cherry Blossom Extract': {
+      image: 'https://images.unsplash.com/photo-1490750967868-88df5691cc06?w=800&q=80',
+      source: 'Prunus serrulata · Japan',
+      benefit: 'The cherry blossom has long been revered in Japanese culture as a symbol of renewal. Rich in antioxidants and flavonoids, it protects the skin from environmental stressors while imparting a luminous, petal-soft radiance.',
+    },
+    'Rice Milk Protein': {
+      image: 'https://images.unsplash.com/photo-1536304929831-ee1ca9d44906?w=800&q=80',
+      source: 'Oryza sativa · Japan & India',
+      benefit: 'Fermented rice water — a centuries-old Japanese beauty secret — delivers a concentrated dose of amino acids, vitamins B and E, and minerals that plump, hydrate, and visibly brighten skin over time.',
+    },
+    'Jojoba Oil': {
+      image: 'https://images.unsplash.com/photo-1611073615830-9efadee73d65?w=800&q=80',
+      source: 'Simmondsia chinensis · Rajasthan, India',
+      benefit: 'Technically a liquid wax, jojoba mimics the skin\'s own sebum almost perfectly. It regulates oil production, delivers deep moisture without clogging pores, and leaves a silky, non-greasy finish.',
+    },
+    'White Lotus Extract': {
+      image: 'https://images.unsplash.com/photo-1559827291-72ee739d0d9a?w=800&q=80',
+      source: 'Nelumbo nucifera · Kashmir, India',
+      benefit: 'Sacred in Ayurvedic tradition, white lotus is prized for its astringent and brightening properties. It helps minimise pores, refine skin texture, and restore an even, luminous tone.',
+    },
+    'Sandalwood Essential Oil': {
+      image: 'https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=800&q=80',
+      source: 'Santalum album · Karnataka, India',
+      benefit: 'Steam-distilled from sustainably harvested heartwood, Indian sandalwood essential oil is among the world\'s most precious ingredients. Anti-inflammatory, deeply moisturising, and ineffably calming.',
+    },
+    'Oud Essential Oil': {
+      image: 'https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=800&q=80',
+      source: 'Aquilaria agallocha · Assam, India',
+      benefit: 'Formed when Aquilaria trees produce a resin in response to infection, oud is one of the rarest and most valuable ingredients in perfumery. Warm, complex, and deeply grounding.',
+    },
+    'Rose Hip Oil': {
+      image: 'https://images.unsplash.com/photo-1599940824399-b87987ceb72a?w=800&q=80',
+      source: 'Rosa canina · Himachal Pradesh, India',
+      benefit: 'Cold-pressed from the seeds of wild rose hips, this oil is extraordinarily rich in essential fatty acids, vitamin C, and trans-retinoic acid — the natural precursor to retinol that visibly reduces fine lines.',
+    },
+    'Coconut Soy Wax Blend': {
+      image: 'https://images.unsplash.com/photo-1572726729207-a78d6feb18d7?w=800&q=80',
+      source: 'Cocos nucifera & Glycine soja · Kerala, India',
+      benefit: 'Our proprietary coconut-soy wax blend burns 30% longer and cleaner than paraffin, releasing fragrance more evenly and leaving no black soot. 100% renewable, biodegradable, and kind to air quality.',
+    },
+    'Vitamin E': {
+      image: 'https://images.unsplash.com/photo-1556228720-da79c7e3e1eb?w=800&q=80',
+      source: 'Tocopherol · Natural origin',
+      benefit: 'A powerful fat-soluble antioxidant that shields the skin\'s lipid barrier from oxidative damage. Works synergistically with vitamin C to brighten, protect, and maintain a youthful, supple texture.',
+    },
+    'Glycerin': {
+      image: 'https://images.unsplash.com/photo-1556228578-0d85751bab9b?w=800&q=80',
+      source: 'Plant-derived · Vegetable origin',
+      benefit: 'A humectant that draws moisture from the environment directly into the skin. Plant-derived glycerin forms an invisible protective layer that keeps skin soft, plump, and hydrated for hours.',
+    },
+    'Hyaluronic Acid': {
+      image: 'https://images.unsplash.com/photo-1620916566398-39f1143ab7be?w=800&q=80',
+      source: 'Biotechnological origin · Vegan',
+      benefit: 'Each molecule holds up to 1,000 times its weight in water. A single application visibly plumps fine lines, restores skin volume, and leaves the complexion dewy and supple — without a single drop of oil.',
+    },
+    'Niacinamide': {
+      image: 'https://images.unsplash.com/photo-1612817288484-6f916006741a?w=800&q=80',
+      source: 'Vitamin B3 · Natural origin',
+      benefit: 'One of skincare\'s most studied actives. Niacinamide visibly reduces pores, fades pigmentation, strengthens the barrier, and regulates sebum production — making it universally beneficial for all skin types.',
+    },
+  }
+
+  // Parse ingredients and find spotlight data for the top 2–3
+  const parsedIngredients = product.ingredients
+    ? product.ingredients.split(',').map(s => s.trim().replace(/\(.*?\)/g, '').trim())
+    : []
+
+  const keyIngredients = parsedIngredients
+    .filter(name => ingredientData[name])
+    .slice(0, 2)
+    .map(name => ({ name, ...ingredientData[name] }))
+
+  // Category hero images for editorial sections
+  const categoryHeroImages: Record<string, string[]> = {
+    'bath-body': [
+      'https://images.unsplash.com/photo-1571781926291-c477ebfd024b?w=1400&q=90',
+      'https://images.unsplash.com/photo-1556228578-0d85751bab9b?w=1400&q=90',
+      'https://images.unsplash.com/photo-1570194065650-d99fb4bedf0a?w=1400&q=90',
+    ],
+    'skincare': [
+      'https://images.unsplash.com/photo-1620916566398-39f1143ab7be?w=1400&q=90',
+      'https://images.unsplash.com/photo-1612817288484-6f916006741a?w=1400&q=90',
+      'https://images.unsplash.com/photo-1556228453-efd6c1ff04f6?w=1400&q=90',
+    ],
+    'home-fragrance': [
+      'https://images.unsplash.com/photo-1603006905003-be319992b18b?w=1400&q=90',
+      'https://images.unsplash.com/photo-1572726729207-a78d6feb18d7?w=1400&q=90',
+      'https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=1400&q=90',
+    ],
+  }
+  const heroImgs = categoryHeroImages[product.category] || categoryHeroImages['bath-body']
 
   const sections: Array<{ key: string; title: string; content: string; note?: string }> = [
     {
@@ -334,17 +429,228 @@ export default function ProductPageClient({
         </div>
       </section>
 
-      {/* ── Complete Your Ritual ── */}
-      {relatedProducts.length > 0 && (
-        <section className="border-t border-cream py-20 bg-[#F8F5F0]">
-          <div className="max-w-[1320px] mx-auto px-6 lg:px-12">
-            <div className="text-center mb-12">
-              <p className="text-[11px] tracking-[0.22em] uppercase text-gold font-light mb-3">
-                You May Also Love
+      {/* ═══════════════════════════════════════════════════════
+          BELOW THE FOLD — Rich editorial sections
+      ═══════════════════════════════════════════════════════ */}
+
+      {/* ── 1. Full-bleed Hero Editorial ── */}
+      <section className="relative h-[70vh] md:h-[80vh] overflow-hidden">
+        <Image
+          src={heroImgs[0]}
+          alt={product.name}
+          fill
+          className="object-cover"
+          sizes="100vw"
+        />
+        <div className="absolute inset-0 bg-gradient-to-r from-forest-green/80 via-forest-green/50 to-transparent" />
+        <div className="absolute inset-0 flex items-center">
+          <div className="max-w-[1320px] mx-auto px-8 lg:px-16 w-full">
+            <div className="max-w-lg">
+              <p className="text-[11px] tracking-[0.3em] uppercase text-gold font-light mb-6">
+                The story behind
               </p>
-              <h2 className="font-serif text-3xl md:text-4xl font-light text-forest-green">
-                Complete Your Ritual
+              <h2 className="font-serif text-4xl md:text-6xl font-light text-cream leading-[1.1] mb-6">
+                {product.name.split(' ').slice(0, 3).join(' ')}
+                <br />
+                <em className="italic text-cream/80">
+                  {product.name.split(' ').slice(3).join(' ') || 'Ritual'}
+                </em>
               </h2>
+              <p className="text-cream/80 font-light text-[15px] leading-relaxed max-w-md">
+                {product.description.substring(0, 180).trim()}…
+              </p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* ── 2. How To Use — numbered steps ── */}
+      <section className="bg-cream py-20 lg:py-28">
+        <div className="max-w-[1320px] mx-auto px-6 lg:px-12">
+          <div className="text-center mb-16">
+            <p className="text-[11px] tracking-[0.22em] uppercase text-gold font-light mb-3">Your ritual</p>
+            <h2 className="font-serif text-3xl md:text-4xl font-light text-forest-green">How To Use</h2>
+          </div>
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-0 md:gap-px bg-[#ddd8ce]">
+            {[
+              {
+                step: '01',
+                title: 'Apply',
+                text: product.category === 'home-fragrance'
+                  ? 'Remove the stopper and insert the reeds. Allow 30 minutes for the fragrance to travel up the reeds before the first use.'
+                  : product.category === 'skincare'
+                  ? 'Apply a few drops or a pea-sized amount to clean, dry skin. Use morning and evening for best results.'
+                  : 'Squeeze a generous amount onto damp skin or a loofah. The formula activates with water.',
+                icon: '①',
+              },
+              {
+                step: '02',
+                title: product.category === 'home-fragrance' ? 'Diffuse' : 'Massage',
+                text: product.category === 'home-fragrance'
+                  ? 'Turn the reeds every few days to refresh the scent. Keep away from direct sunlight and drafts for longer lasting fragrance.'
+                  : product.category === 'skincare'
+                  ? 'Massage gently in upward, circular motions until fully absorbed. Pat — do not rub — around the eye area.'
+                  : 'Work into a rich, creamy lather using circular motions. Spend a full minute in the ritual — let the fragrance envelop you.',
+                icon: '②',
+              },
+              {
+                step: '03',
+                title: product.category === 'home-fragrance' ? 'Layer' : 'Rinse & Seal',
+                text: product.category === 'home-fragrance'
+                  ? 'Pair with our matching body fragrance and scented candle to create a complete sensory atmosphere in your space.'
+                  : product.category === 'skincare'
+                  ? 'Layer with your SPF in the morning, or follow with our facial oil in the evening to seal in the active ingredients.'
+                  : 'Rinse thoroughly with warm water. Pat skin dry and immediately follow with the matching body lotion — the fragrance notes amplify together.',
+                icon: '③',
+              },
+            ].map((s) => (
+              <div key={s.step} className="bg-cream p-10 lg:p-14 text-center flex flex-col items-center">
+                <div className="w-14 h-14 rounded-full border border-gold/40 flex items-center justify-center mb-6">
+                  <span className="font-serif text-gold text-2xl font-light">{s.step}</span>
+                </div>
+                <h3 className="font-serif text-xl font-light text-forest-green mb-4">{s.title}</h3>
+                <p className="text-[13px] text-text-medium font-light leading-relaxed max-w-[260px]">{s.text}</p>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* ── 3. Ingredient Spotlights ── */}
+      {keyIngredients.length > 0 && (
+        <section className="py-20 lg:py-28 bg-warm-white">
+          <div className="max-w-[1320px] mx-auto px-6 lg:px-12">
+            <div className="text-center mb-16">
+              <p className="text-[11px] tracking-[0.22em] uppercase text-gold font-light mb-3">Pure. Proven. Named.</p>
+              <h2 className="font-serif text-3xl md:text-4xl font-light text-forest-green">The Ingredients</h2>
+              <p className="text-[13px] text-text-medium font-light mt-4 max-w-lg mx-auto leading-relaxed">
+                We source every ingredient with intention. Below is what makes this formula exceptional — and why.
+              </p>
+            </div>
+            <div className="space-y-0">
+              {keyIngredients.map((ing, i) => (
+                <div
+                  key={ing.name}
+                  className={`grid grid-cols-1 md:grid-cols-2 min-h-[420px] ${i % 2 === 1 ? 'md:flex md:flex-row-reverse' : ''}`}
+                >
+                  {/* Image side */}
+                  <div className="relative min-h-[300px] md:min-h-[420px] overflow-hidden bg-cream">
+                    <Image
+                      src={ing.image}
+                      alt={ing.name}
+                      fill
+                      className="object-cover"
+                      sizes="(max-width: 768px) 100vw, 50vw"
+                    />
+                    <div className={`absolute inset-0 ${i % 2 === 1 ? 'bg-gradient-to-l' : 'bg-gradient-to-r'} from-forest-green/20 to-transparent`} />
+                  </div>
+                  {/* Text side */}
+                  <div className={`bg-[#F2EDE5] flex flex-col justify-center px-10 lg:px-16 py-14 ${i % 2 === 1 ? 'md:pl-16 md:pr-10' : ''}`}>
+                    <p className="text-[10px] tracking-[0.25em] uppercase text-gold font-light mb-4">
+                      Key ingredient
+                    </p>
+                    <h3 className="font-serif text-3xl md:text-4xl font-light text-forest-green leading-tight mb-5">
+                      {ing.name}
+                    </h3>
+                    <p className="text-[13px] text-text-medium/70 font-light italic mb-6 tracking-wide">
+                      {ing.source}
+                    </p>
+                    <p className="text-[14px] text-text-medium font-light leading-relaxed max-w-md">
+                      {ing.benefit}
+                    </p>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
+        </section>
+      )}
+
+      {/* ── 4. Full-bleed Dark Sustainability Section ── */}
+      <section className="relative overflow-hidden bg-forest-green py-24 lg:py-32">
+        {/* Subtle background pattern */}
+        <div className="absolute inset-0 opacity-5">
+          <div className="absolute inset-0" style={{
+            backgroundImage: 'radial-gradient(circle at 20% 50%, #C9A96E 1px, transparent 1px), radial-gradient(circle at 80% 20%, #C9A96E 1px, transparent 1px)',
+            backgroundSize: '60px 60px',
+          }} />
+        </div>
+        <div className="max-w-[1320px] mx-auto px-6 lg:px-12 relative z-10">
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 lg:gap-24 items-center">
+            <div>
+              <p className="text-[11px] tracking-[0.25em] uppercase text-gold font-light mb-6">
+                Our responsibility
+              </p>
+              <h2 className="font-serif text-4xl md:text-5xl lg:text-6xl font-light text-cream leading-[1.1] mb-8">
+                Beautiful
+                <br />
+                <em className="italic text-cream/70">by design</em>
+              </h2>
+              <p className="text-cream/70 font-light leading-relaxed text-[14px] mb-8 max-w-md">
+                {product.sustainabilityInfo}
+              </p>
+              <Link
+                href="/about#sustainability"
+                className="inline-flex items-center gap-3 text-[11px] tracking-[0.2em] uppercase text-gold font-light border-b border-gold/40 pb-1 hover:border-gold transition-colors"
+              >
+                Our sustainability promise <ArrowRight size={12} />
+              </Link>
+            </div>
+            <div className="grid grid-cols-2 gap-5">
+              {[
+                { value: '80%+', label: 'Natural origin ingredients' },
+                { value: '100%', label: 'Cruelty free & vegan' },
+                { value: '0', label: 'Synthetic preservatives' },
+                { value: '100%', label: 'Recyclable packaging' },
+              ].map(stat => (
+                <div key={stat.label} className="border border-cream/10 p-8 hover:border-gold/30 transition-colors duration-500">
+                  <p className="font-serif text-4xl font-light text-gold mb-2">{stat.value}</p>
+                  <p className="text-cream/50 text-[11px] tracking-wide uppercase font-light leading-snug">{stat.label}</p>
+                </div>
+              ))}
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* ── 5. Second editorial full-bleed image ── */}
+      <section className="relative h-[60vh] md:h-[70vh] overflow-hidden">
+        <Image
+          src={heroImgs[1] || heroImgs[0]}
+          alt={`${product.name} — ritual`}
+          fill
+          className="object-cover"
+          sizes="100vw"
+        />
+        <div className="absolute inset-0 bg-gradient-to-t from-forest-green/70 via-transparent to-transparent" />
+        <div className="absolute bottom-0 left-0 right-0 p-10 lg:p-16">
+          <div className="max-w-[1320px] mx-auto">
+            <p className="font-serif text-2xl md:text-3xl font-light text-cream/90 max-w-xl leading-relaxed">
+              &ldquo;{product.shortDescription}&rdquo;
+            </p>
+          </div>
+        </div>
+      </section>
+
+      {/* ── 6. Complete Your Ritual — Related Products ── */}
+      {relatedProducts.length > 0 && (
+        <section className="py-20 lg:py-28 bg-[#F8F5F0]">
+          <div className="max-w-[1320px] mx-auto px-6 lg:px-12">
+            <div className="flex items-end justify-between mb-12">
+              <div>
+                <p className="text-[11px] tracking-[0.22em] uppercase text-gold font-light mb-3">
+                  Complete the ritual
+                </p>
+                <h2 className="font-serif text-3xl md:text-4xl font-light text-forest-green">
+                  You May Also Love
+                </h2>
+              </div>
+              <Link
+                href={`/collections/${product.category}`}
+                className="hidden md:flex items-center gap-2 text-[11px] tracking-widest uppercase text-text-medium hover:text-forest-green transition-colors border-b border-current pb-0.5"
+              >
+                View all <ArrowRight size={11} />
+              </Link>
             </div>
             <div className="grid grid-cols-2 md:grid-cols-4 gap-4 md:gap-6">
               {relatedProducts.slice(0, 4).map(p => (
@@ -359,11 +665,15 @@ export default function ProductPageClient({
                     />
                     {p.isBestseller && (
                       <div className="absolute top-3 left-3">
-                        <span className="bg-white text-forest-green text-[9px] px-2 py-1 tracking-widest uppercase">
+                        <span className="bg-white text-forest-green text-[9px] px-2 py-1 tracking-widest uppercase shadow-sm">
                           Bestseller
                         </span>
                       </div>
                     )}
+                    {/* Quick add overlay */}
+                    <div className="absolute bottom-0 left-0 right-0 bg-forest-green/90 text-cream text-[10px] tracking-[0.2em] uppercase py-3 text-center translate-y-full group-hover:translate-y-0 transition-transform duration-300 font-light">
+                      View Product
+                    </div>
                   </div>
                   <p className="text-[10px] tracking-[0.15em] uppercase text-gold font-light mb-1.5">
                     {p.subcategory?.replace(/-/g, ' ') || categoryLabel[p.category]}
@@ -381,8 +691,8 @@ export default function ProductPageClient({
         </section>
       )}
 
-      {/* Brand strip */}
-      <div className="py-7 bg-forest-green text-center">
+      {/* ── 7. Brand strip ── */}
+      <div className="py-8 bg-forest-green text-center">
         <p className="text-[10px] tracking-[0.3em] uppercase text-cream/50 font-light">
           Crafted with intention · Delivered across India · 100% cruelty free & vegan
         </p>
