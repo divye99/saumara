@@ -21,7 +21,7 @@ export default function ProductCard({ product }: ProductCardProps) {
   }
 
   return (
-    <Link href={`/products/${product.slug}`} className="product-card block">
+    <Link href={`/products/${product.slug}`} className="group cursor-pointer block">
       <div className="relative overflow-hidden bg-cream aspect-[3/4]">
         <Image
           src={product.imageUrl}

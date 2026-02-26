@@ -2,6 +2,7 @@ import { prisma } from '@/lib/prisma'
 import { notFound } from 'next/navigation'
 import ProductCard from '@/components/ProductCard'
 import { Product } from '@/types'
+import SortSelect from './SortSelect'
 
 interface PageProps {
   params: { category: string }
@@ -27,18 +28,15 @@ const categoryConfig: Record<string, { title: string; description: string; hero:
 }
 
 async function getProducts(category: string, sort?: string, sub?: string): Promise<Product[]> {
-  const orderBy: Record<string, 'asc' | 'desc'> = {}
+  const orderBy: { price?: 'asc' | 'desc'; createdAt?: 'asc' | 'desc' } = {}
   if (sort === 'price-asc') orderBy.price = 'asc'
   else if (sort === 'price-desc') orderBy.price = 'desc'
   else orderBy.createdAt = 'asc'
 
-  const where: Record<string, unknown> = { category }
+  const where: { category: string; subcategory?: string } = { category }
   if (sub) where.subcategory = sub
 
-  const products = await prisma.product.findMany({
-    where,
-    orderBy,
-  })
+  const products = await prisma.product.findMany({ where, orderBy })
 
   return products.map(p => ({
     ...p,
@@ -54,9 +52,7 @@ async function getSubcategories(category: string): Promise<string[]> {
     select: { subcategory: true },
     distinct: ['subcategory'],
   })
-  return results
-    .map(r => r.subcategory)
-    .filter((s): s is string => s !== null)
+  return results.map(r => r.subcategory).filter((s): s is string => s !== null)
 }
 
 export async function generateStaticParams() {
@@ -119,24 +115,7 @@ export default async function CollectionPage({ params, searchParams }: PageProps
               </a>
             ))}
           </div>
-          <div className="flex items-center gap-2">
-            <span className="text-xs text-text-medium">Sort:</span>
-            <select
-              className="text-xs border border-cream px-3 py-2 bg-transparent text-text-medium focus:outline-none focus:border-forest-green"
-              defaultValue={searchParams.sort || 'featured'}
-              onChange={(e) => {
-                if (typeof window !== 'undefined') {
-                  const url = new URL(window.location.href)
-                  url.searchParams.set('sort', e.target.value)
-                  window.location.href = url.toString()
-                }
-              }}
-            >
-              <option value="featured">Featured</option>
-              <option value="price-asc">Price: Low to High</option>
-              <option value="price-desc">Price: High to Low</option>
-            </select>
-          </div>
+          <SortSelect currentSort={searchParams.sort} category={params.category} currentSub={searchParams.sub} />
         </div>
       </section>
 
