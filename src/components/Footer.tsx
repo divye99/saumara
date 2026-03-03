@@ -64,9 +64,9 @@ export default function Footer() {
         <div className="border-t border-cream/10 mt-16 pt-8 flex flex-col md:flex-row justify-between items-center gap-4">
           <p className="text-cream/40 text-xs">© 2024 Saumara. All rights reserved.</p>
           <div className="flex gap-6">
-            <a href="#" className="text-cream/40 text-xs hover:text-cream/70 transition-colors">Privacy Policy</a>
-            <a href="#" className="text-cream/40 text-xs hover:text-cream/70 transition-colors">Terms of Service</a>
-            <a href="#" className="text-cream/40 text-xs hover:text-cream/70 transition-colors">Shipping Policy</a>
+            <Link href="/privacy" className="text-cream/40 text-xs hover:text-cream/70 transition-colors">Privacy Policy</Link>
+            <Link href="/terms" className="text-cream/40 text-xs hover:text-cream/70 transition-colors">Terms of Service</Link>
+            <Link href="/shipping" className="text-cream/40 text-xs hover:text-cream/70 transition-colors">Shipping Policy</Link>
           </div>
           <p className="text-cream/40 text-xs">Made with intention in India</p>
         </div>
