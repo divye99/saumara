@@ -52,7 +52,7 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
       `${product.subcategory?.replace(/-/g, ' ')} india`,
       'luxury beauty india',
       'premium skincare india',
-      product.keyIngredient || '',
+      product.ingredients?.split(',')[0]?.trim() || '',
     ].filter(Boolean),
     openGraph: {
       title: `${product.name} | Saumara`,
