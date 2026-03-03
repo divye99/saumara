@@ -78,7 +78,7 @@ export default async function HomePage() {
       <section className="relative h-screen flex items-center justify-center overflow-hidden">
         <div className="absolute inset-0">
           <Image
-            src="https://images.unsplash.com/photo-1571781926291-c477ebfd024b?w=1600&q=90"
+            src="https://res.cloudinary.com/dcgevdwcg/image/upload/v1772541807/Hero_Banner_Prompt_lmygmn.png"
             alt="Saumara — Rituals for the Mindful Self"
             fill
             priority
