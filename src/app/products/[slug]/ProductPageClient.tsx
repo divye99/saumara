@@ -102,7 +102,7 @@ export default function ProductPageClient({
       benefit: 'A powerful fat-soluble antioxidant that shields the skin\'s lipid barrier from oxidative damage. Works synergistically with vitamin C to brighten, protect, and maintain a youthful, supple texture.',
     },
     'Glycerin': {
-      image: 'https://images.unsplash.com/photo-1556228578-0d85751bab9b?w=800&q=80',
+      image: 'https://res.cloudinary.com/dcgevdwcg/image/upload/v1772539212/Glycerin_lkc6q9.png',
       source: 'Plant-derived · Vegetable origin',
       benefit: 'A humectant that draws moisture from the environment directly into the skin. Plant-derived glycerin forms an invisible protective layer that keeps skin soft, plump, and hydrated for hours.',
     },
