@@ -61,12 +61,12 @@ const sustainabilityStats = [
 ]
 
 const instagramImages = [
-  'https://images.unsplash.com/photo-1570194065650-d99fb4bedf0a?w=400&q=80',
-  'https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=400&q=80',
-  'https://images.unsplash.com/photo-1556228453-efd6c1ff04f6?w=400&q=80',
-  'https://images.unsplash.com/photo-1612817288484-6f916006741a?w=400&q=80',
-  'https://images.unsplash.com/photo-1602874801007-bd458bb1b8b2?w=400&q=80',
-  'https://images.unsplash.com/photo-1585232350386-0b3c8674f56e?w=400&q=80',
+  'https://res.cloudinary.com/dcgevdwcg/image/upload/v1772540928/IG_1_zcenv3.png',
+  'https://res.cloudinary.com/dcgevdwcg/image/upload/v1772540930/IG_2_xblxe6.png',
+  'https://res.cloudinary.com/dcgevdwcg/image/upload/v1772540931/IG_3_jfav8a.png',
+  'https://res.cloudinary.com/dcgevdwcg/image/upload/v1772540942/IG_4_sen8de.png',
+  'https://res.cloudinary.com/dcgevdwcg/image/upload/v1772540936/IG_5_zhorsb.png',
+  'https://res.cloudinary.com/dcgevdwcg/image/upload/v1772540936/IG_6_koaa6s.png',
 ]
 
 export default async function HomePage() {
@@ -217,7 +217,7 @@ export default async function HomePage() {
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
           <div className="relative aspect-square overflow-hidden">
             <Image
-              src="https://images.unsplash.com/photo-1556228578-0d85751bab9b?w=800&q=80"
+              src="https://res.cloudinary.com/dcgevdwcg/image/upload/v1772541075/Divye_Jain_aerial_drone_view_of_a_blooming_white_lotus_flower_f_9229d7f8-743b-4cf7-8434-2961921bceb6_ay1zqv.png"
               alt="Saumara — Our Story"
               fill
               className="object-cover"
