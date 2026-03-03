@@ -1,8 +1,6 @@
 import { Resend } from 'resend'
 import { NextRequest, NextResponse } from 'next/server'
 
-const resend = new Resend(process.env.RESEND_API_KEY)
-
 export async function POST(req: NextRequest) {
   try {
     const { email } = await req.json()
@@ -10,6 +8,9 @@ export async function POST(req: NextRequest) {
     if (!email || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
       return NextResponse.json({ error: 'Invalid email address.' }, { status: 400 })
     }
+
+    // Instantiate inside handler — not at module level — so build succeeds without the env var
+    const resend = new Resend(process.env.RESEND_API_KEY)
 
     await resend.emails.send({
       from: 'Saumara <onboarding@resend.dev>',
@@ -23,7 +24,7 @@ export async function POST(req: NextRequest) {
             Someone just signed up to receive The Ritual Letter from Saumara.
           </p>
           <div style="background: rgba(201,169,110,0.15); border-left: 2px solid #C9A96E; padding: 16px 20px; margin-bottom: 32px;">
-            <p style="font-size: 13px; color: #C9A96E; margin: 0 0 4px; letter-spacing: 0.1em; text-transform: uppercase; font-size: 10px;">Subscriber email</p>
+            <p style="font-size: 10px; color: #C9A96E; margin: 0 0 4px; letter-spacing: 0.1em; text-transform: uppercase;">Subscriber email</p>
             <p style="font-size: 16px; font-weight: 300; margin: 0; color: #F5F0E8;">${email}</p>
           </div>
           <p style="font-size: 11px; color: rgba(245,240,232,0.4); margin: 0;">saumara.com · Rituals for the Mindful Self</p>
