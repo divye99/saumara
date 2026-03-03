@@ -131,19 +131,19 @@ export default function ProductPageClient({
   // Category hero images for editorial sections
   const categoryHeroImages: Record<string, string[]> = {
     'bath-body': [
-      'https://images.unsplash.com/photo-1571781926291-c477ebfd024b?w=1400&q=90',
-      'https://images.unsplash.com/photo-1556228578-0d85751bab9b?w=1400&q=90',
-      'https://images.unsplash.com/photo-1570194065650-d99fb4bedf0a?w=1400&q=90',
+      'https://res.cloudinary.com/dcgevdwcg/image/upload/v1772536153/Bath_Body_Hero_1_ggthnv.png',
+      'https://res.cloudinary.com/dcgevdwcg/image/upload/v1772536158/Bath_Body_Hero_2_cklgus.png',
+      'https://res.cloudinary.com/dcgevdwcg/image/upload/v1772536152/Bath_Body_Hero_3_kexuus.png',
     ],
     'skincare': [
-      'https://images.unsplash.com/photo-1620916566398-39f1143ab7be?w=1400&q=90',
-      'https://images.unsplash.com/photo-1612817288484-6f916006741a?w=1400&q=90',
-      'https://images.unsplash.com/photo-1556228453-efd6c1ff04f6?w=1400&q=90',
+      'https://res.cloudinary.com/dcgevdwcg/image/upload/v1772536154/Skincare_Hero_1_j2u0ib.png',
+      'https://res.cloudinary.com/dcgevdwcg/image/upload/v1772536159/Skincare_Hero_2_qvcj6j.png',
+      'https://res.cloudinary.com/dcgevdwcg/image/upload/v1772536192/Skincare_Hero_3_aal8wj.png',
     ],
     'home-fragrance': [
-      'https://images.unsplash.com/photo-1603006905003-be319992b18b?w=1400&q=90',
-      'https://images.unsplash.com/photo-1572726729207-a78d6feb18d7?w=1400&q=90',
-      'https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=1400&q=90',
+      'https://res.cloudinary.com/dcgevdwcg/image/upload/v1772536147/Home_Fragrance_Hero_1_xuw8ez.png',
+      'https://res.cloudinary.com/dcgevdwcg/image/upload/v1772536157/Home_Fragrance_Hero_2_ravlyb.png',
+      'https://res.cloudinary.com/dcgevdwcg/image/upload/v1772536155/Home_Fragrance_Hero_3_hoh4yf.png',
     ],
   }
   const heroImgs = categoryHeroImages[product.category] || categoryHeroImages['bath-body']
