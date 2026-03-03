@@ -32,7 +32,7 @@ const collections = [
     subtitle: 'The Daily Ritual',
     description: 'Transform every shower into ceremony. Body washes, scrubs, oils and butters crafted from the world\'s most prized botanicals.',
     href: '/collections/bath-body',
-    image: 'https://images.unsplash.com/photo-1556228578-0d85751bab9b?w=800&q=80',
+    image: 'https://res.cloudinary.com/dcgevdwcg/image/upload/v1772540607/Bath_Body_Colelction_Card_zwqkop.png',
     color: 'from-forest-green/80',
   },
   {
@@ -40,7 +40,7 @@ const collections = [
     subtitle: 'The Science of Ritual',
     description: 'Full ingredient transparency. Clinically proven actives. Natural origin formulas that honour both your skin and the earth.',
     href: '/collections/skincare',
-    image: 'https://images.unsplash.com/photo-1620916566398-39f1143ab7be?w=800&q=80',
+    image: 'https://res.cloudinary.com/dcgevdwcg/image/upload/v1772540615/Skincare_Collection_Card_r4abhf.png',
     color: 'from-deep-burgundy/80',
   },
   {
@@ -48,7 +48,7 @@ const collections = [
     subtitle: 'The Sacred Space',
     description: 'Your home deserves its own ritual. Candles, diffusers and incense that make every room a sanctuary.',
     href: '/collections/home-fragrance',
-    image: 'https://images.unsplash.com/photo-1603006905003-be319992b18b?w=800&q=80',
+    image: 'https://res.cloudinary.com/dcgevdwcg/image/upload/v1772540609/Home_Fragrance_Collection_Card_g8o8as.png',
     color: 'from-text-dark/80',
   },
 ]
