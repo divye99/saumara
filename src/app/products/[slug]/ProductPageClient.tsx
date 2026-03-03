@@ -536,10 +536,10 @@ export default function ProductPageClient({
               {keyIngredients.map((ing, i) => (
                 <div
                   key={ing.name}
-                  className={`grid grid-cols-1 md:grid-cols-2 min-h-[420px] ${i % 2 === 1 ? 'md:flex md:flex-row-reverse' : ''}`}
+                  className="grid grid-cols-1 md:grid-cols-2 min-h-[420px]"
                 >
                   {/* Image side */}
-                  <div className="relative min-h-[300px] md:min-h-[420px] overflow-hidden bg-cream">
+                  <div className={`relative min-h-[300px] md:min-h-[420px] overflow-hidden bg-cream ${i % 2 === 1 ? 'md:order-2' : 'md:order-1'}`}>
                     <Image
                       src={ing.image}
                       alt={ing.name}
@@ -550,7 +550,7 @@ export default function ProductPageClient({
                     <div className={`absolute inset-0 ${i % 2 === 1 ? 'bg-gradient-to-l' : 'bg-gradient-to-r'} from-forest-green/20 to-transparent`} />
                   </div>
                   {/* Text side */}
-                  <div className={`bg-[#F2EDE5] flex flex-col justify-center px-10 lg:px-16 py-14 ${i % 2 === 1 ? 'md:pl-16 md:pr-10' : ''}`}>
+                  <div className={`bg-[#F2EDE5] flex flex-col justify-center px-10 lg:px-16 py-14 ${i % 2 === 1 ? 'md:order-1' : 'md:order-2'}`}>
                     <p className="text-[10px] tracking-[0.25em] uppercase text-gold font-light mb-4">
                       Key ingredient
                     </p>
