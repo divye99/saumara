@@ -15,17 +15,17 @@ const categoryConfig: Record<string, { title: string; description: string; hero:
   'bath-body': {
     title: 'Bath & Body',
     description: 'Transform every shower and bath into a ceremony of self-care. From exfoliating scrubs to nourishing body oils — each product crafted from the world\'s most prized botanicals.',
-    hero: 'https://images.unsplash.com/photo-1556228578-0d85751bab9b?w=1400&q=80',
+    hero: 'https://res.cloudinary.com/dcgevdwcg/image/upload/v1772542521/Bath_Body_Collection_Banner_jy3cgi.png',
   },
   'skincare': {
     title: 'Skincare',
     description: 'Full ingredient transparency. Clinically proven actives. Natural-origin formulas that deliver visible results while honouring the earth. Skincare you can trust, completely.',
-    hero: 'https://images.unsplash.com/photo-1620916566398-39f1143ab7be?w=1400&q=80',
+    hero: 'https://res.cloudinary.com/dcgevdwcg/image/upload/v1772542524/Skincare_Collection_Banner_ixgnqa.png',
   },
   'home-fragrance': {
     title: 'Home Fragrance',
     description: 'Your home is your most personal sanctuary. Our candles, diffusers and incense transform every room into a place of intention — fragrant, calm, and entirely yours.',
-    hero: 'https://images.unsplash.com/photo-1603006905003-be319992b18b?w=1400&q=80',
+    hero: 'https://res.cloudinary.com/dcgevdwcg/image/upload/v1772542523/Home_Fragrance_Collection_Banner_zemf1m.png',
   },
 }
 

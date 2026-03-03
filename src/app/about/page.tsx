@@ -30,7 +30,7 @@ export default function AboutPage() {
       <section className="relative h-screen flex items-center justify-center overflow-hidden">
         <div className="absolute inset-0">
           <Image
-            src="https://images.unsplash.com/photo-1556228578-0d85751bab9b?w=1600&q=80"
+            src="https://res.cloudinary.com/dcgevdwcg/image/upload/v1772542520/About_Page-_Full_Screen_Hero_o4qywt.png"
             alt="Saumara — Our Story"
             fill
             priority
@@ -75,7 +75,7 @@ export default function AboutPage() {
           </div>
           <div className="relative aspect-[4/5] overflow-hidden">
             <Image
-              src="https://images.unsplash.com/photo-1571781926291-c477ebfd024b?w=800&q=80"
+              src="https://res.cloudinary.com/dcgevdwcg/image/upload/v1772542533/About_Page-_Origin_Story_e2tius.png"
               alt="Saumara ingredients"
               fill
               className="object-cover"
