@@ -5,10 +5,53 @@ import { notFound } from 'next/navigation'
 import ProductCard from '@/components/ProductCard'
 import { Product } from '@/types'
 import SortSelect from './SortSelect'
+import { Metadata } from 'next'
 
 interface PageProps {
   params: { category: string }
   searchParams: { sort?: string; sub?: string }
+}
+
+export async function generateMetadata({ params }: PageProps): Promise<Metadata> {
+  const meta: Record<string, { title: string; description: string; keywords: string[] }> = {
+    'bath-body': {
+      title: 'Bath & Body Collection',
+      description: 'Shop Saumara\'s luxury bath & body range — body washes, scrubs, oils, lotions and more. Crafted from the world\'s rarest botanicals. Free shipping over ₹999.',
+      keywords: ['luxury body wash india', 'premium body scrub india', 'natural body lotion india', 'bath salts india', 'body oil india', 'saumara bath body'],
+    },
+    'skincare': {
+      title: 'Skincare Collection',
+      description: 'Clinically proven skincare with full ingredient transparency. Serums, moisturisers, masks and more from Saumara India. Natural-origin, high-performance formulas.',
+      keywords: ['luxury skincare india', 'natural face serum india', 'premium moisturiser india', 'hyaluronic acid serum india', 'bakuchiol india', 'saumara skincare'],
+    },
+    'home-fragrance': {
+      title: 'Home Fragrance Collection',
+      description: 'Transform your home into a sanctuary with Saumara\'s luxury candles, reed diffusers, room sprays and incense. Premium Indian home fragrance delivered across India.',
+      keywords: ['luxury candles india', 'reed diffuser india', 'premium room spray india', 'oud candle india', 'home fragrance india', 'saumara candles'],
+    },
+  }
+
+  const m = meta[params.category]
+  if (!m) return {}
+
+  const heroImages: Record<string, string> = {
+    'bath-body': 'https://res.cloudinary.com/dcgevdwcg/image/upload/v1772542521/Bath_Body_Collection_Banner_jy3cgi.png',
+    'skincare': 'https://res.cloudinary.com/dcgevdwcg/image/upload/v1772542524/Skincare_Collection_Banner_ixgnqa.png',
+    'home-fragrance': 'https://res.cloudinary.com/dcgevdwcg/image/upload/v1772542523/Home_Fragrance_Collection_Banner_zemf1m.png',
+  }
+
+  return {
+    title: m.title,
+    description: m.description,
+    keywords: m.keywords,
+    openGraph: {
+      title: `${m.title} | Saumara`,
+      description: m.description,
+      url: `https://www.saumara.com/collections/${params.category}`,
+      images: [{ url: heroImages[params.category], alt: m.title }],
+    },
+    alternates: { canonical: `https://www.saumara.com/collections/${params.category}` },
+  }
 }
 
 const categoryConfig: Record<string, { title: string; description: string; hero: string }> = {
