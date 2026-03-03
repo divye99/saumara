@@ -57,47 +57,47 @@ export default function ProductPageClient({
   // Map common ingredients to their botanical images and benefit copy
   const ingredientData: Record<string, { image: string; source: string; benefit: string }> = {
     'Cherry Blossom Extract': {
-      image: 'https://images.unsplash.com/photo-1490750967868-88df5691cc06?w=800&q=80',
+      image: 'https://res.cloudinary.com/dcgevdwcg/image/upload/v1772538337/Cherry_Blossom_c7kmq4.png',
       source: 'Prunus serrulata · Japan',
       benefit: 'The cherry blossom has long been revered in Japanese culture as a symbol of renewal. Rich in antioxidants and flavonoids, it protects the skin from environmental stressors while imparting a luminous, petal-soft radiance.',
     },
     'Rice Milk Protein': {
-      image: 'https://images.unsplash.com/photo-1536304929831-ee1ca9d44906?w=800&q=80',
+      image: 'https://res.cloudinary.com/dcgevdwcg/image/upload/v1772538341/Rice_Milk_xlyz9n.png',
       source: 'Oryza sativa · Japan & India',
       benefit: 'Fermented rice water — a centuries-old Japanese beauty secret — delivers a concentrated dose of amino acids, vitamins B and E, and minerals that plump, hydrate, and visibly brighten skin over time.',
     },
     'Jojoba Oil': {
-      image: 'https://images.unsplash.com/photo-1611073615830-9efadee73d65?w=800&q=80',
+      image: 'https://res.cloudinary.com/dcgevdwcg/image/upload/v1772538348/Jojoba_ghlw6k.png',
       source: 'Simmondsia chinensis · Rajasthan, India',
       benefit: 'Technically a liquid wax, jojoba mimics the skin\'s own sebum almost perfectly. It regulates oil production, delivers deep moisture without clogging pores, and leaves a silky, non-greasy finish.',
     },
     'White Lotus Extract': {
-      image: 'https://images.unsplash.com/photo-1559827291-72ee739d0d9a?w=800&q=80',
+      image: 'https://res.cloudinary.com/dcgevdwcg/image/upload/v1772538346/White_Lotus_fr1ler.png',
       source: 'Nelumbo nucifera · Kashmir, India',
       benefit: 'Sacred in Ayurvedic tradition, white lotus is prized for its astringent and brightening properties. It helps minimise pores, refine skin texture, and restore an even, luminous tone.',
     },
     'Sandalwood Essential Oil': {
-      image: 'https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=800&q=80',
+      image: 'https://res.cloudinary.com/dcgevdwcg/image/upload/v1772538344/Sandalwood_szjnjp.png',
       source: 'Santalum album · Karnataka, India',
       benefit: 'Steam-distilled from sustainably harvested heartwood, Indian sandalwood essential oil is among the world\'s most precious ingredients. Anti-inflammatory, deeply moisturising, and ineffably calming.',
     },
     'Oud Essential Oil': {
-      image: 'https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=800&q=80',
+      image: 'https://res.cloudinary.com/dcgevdwcg/image/upload/v1772538336/Oud_lcrd6t.png',
       source: 'Aquilaria agallocha · Assam, India',
       benefit: 'Formed when Aquilaria trees produce a resin in response to infection, oud is one of the rarest and most valuable ingredients in perfumery. Warm, complex, and deeply grounding.',
     },
     'Rose Hip Oil': {
-      image: 'https://images.unsplash.com/photo-1599940824399-b87987ceb72a?w=800&q=80',
+      image: 'https://res.cloudinary.com/dcgevdwcg/image/upload/v1772538341/Rose_Hip_lng5dn.png',
       source: 'Rosa canina · Himachal Pradesh, India',
       benefit: 'Cold-pressed from the seeds of wild rose hips, this oil is extraordinarily rich in essential fatty acids, vitamin C, and trans-retinoic acid — the natural precursor to retinol that visibly reduces fine lines.',
     },
     'Coconut Soy Wax Blend': {
-      image: 'https://images.unsplash.com/photo-1572726729207-a78d6feb18d7?w=800&q=80',
+      image: 'https://res.cloudinary.com/dcgevdwcg/image/upload/v1772538332/Coconut-Soy_Wax_hpqtxi.png',
       source: 'Cocos nucifera & Glycine soja · Kerala, India',
       benefit: 'Our proprietary coconut-soy wax blend burns 30% longer and cleaner than paraffin, releasing fragrance more evenly and leaving no black soot. 100% renewable, biodegradable, and kind to air quality.',
     },
     'Vitamin E': {
-      image: 'https://images.unsplash.com/photo-1556228720-da79c7e3e1eb?w=800&q=80',
+      image: 'https://res.cloudinary.com/dcgevdwcg/image/upload/v1772538345/Vitamin_E_volztw.png',
       source: 'Tocopherol · Natural origin',
       benefit: 'A powerful fat-soluble antioxidant that shields the skin\'s lipid barrier from oxidative damage. Works synergistically with vitamin C to brighten, protect, and maintain a youthful, supple texture.',
     },
@@ -107,14 +107,19 @@ export default function ProductPageClient({
       benefit: 'A humectant that draws moisture from the environment directly into the skin. Plant-derived glycerin forms an invisible protective layer that keeps skin soft, plump, and hydrated for hours.',
     },
     'Hyaluronic Acid': {
-      image: 'https://images.unsplash.com/photo-1620916566398-39f1143ab7be?w=800&q=80',
+      image: 'https://res.cloudinary.com/dcgevdwcg/image/upload/v1772538332/Hyaluronic_Acid_saxnno.png',
       source: 'Biotechnological origin · Vegan',
       benefit: 'Each molecule holds up to 1,000 times its weight in water. A single application visibly plumps fine lines, restores skin volume, and leaves the complexion dewy and supple — without a single drop of oil.',
     },
     'Niacinamide': {
-      image: 'https://images.unsplash.com/photo-1612817288484-6f916006741a?w=800&q=80',
+      image: 'https://res.cloudinary.com/dcgevdwcg/image/upload/v1772538348/Niacinamide_bxliyb.png',
       source: 'Vitamin B3 · Natural origin',
       benefit: 'One of skincare\'s most studied actives. Niacinamide visibly reduces pores, fades pigmentation, strengthens the barrier, and regulates sebum production — making it universally beneficial for all skin types.',
+    },
+    'Bakuchiol': {
+      image: 'https://res.cloudinary.com/dcgevdwcg/image/upload/v1772538329/Bakuchiol_dyd2wg.png',
+      source: 'Psoralea corylifolia · India',
+      benefit: 'The plant-based retinol alternative. Bakuchiol delivers the same visible results as retinol — smoothing fine lines, firming skin, and fading pigmentation — without the irritation, making it suitable for even the most sensitive skin.',
     },
   }
 
