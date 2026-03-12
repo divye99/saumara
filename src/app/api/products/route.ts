@@ -14,13 +14,14 @@ export async function GET(request: NextRequest) {
         .from('products')
         .select('*')
         .eq('slug', slug)
+        .neq('hidden', true)
         .single()
 
       if (error || !data) return NextResponse.json({ product: null }, { status: 404 })
       return NextResponse.json({ product: data })
     }
 
-    let query = supabase.from('products').select('*').order('createdAt', { ascending: true }).limit(limit)
+    let query = supabase.from('products').select('*').neq('hidden', true).order('createdAt', { ascending: true }).limit(limit)
 
     if (category) query = query.eq('category', category)
     if (bestseller === 'true') query = query.eq('isBestseller', true)

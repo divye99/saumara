@@ -30,6 +30,7 @@ async function getRelatedProducts(category: string, currentSlug: string): Promis
     .select('*')
     .eq('category', category)
     .neq('slug', currentSlug)
+    .neq('hidden', true)
     .order('isBestseller', { ascending: false })
     .limit(4)
 

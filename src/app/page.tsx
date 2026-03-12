@@ -15,6 +15,7 @@ async function getBestsellers(): Promise<Product[]> {
       .from('products')
       .select('*')
       .eq('isBestseller', true)
+      .neq('hidden', true)
       .order('createdAt', { ascending: true })
       .limit(8)
 

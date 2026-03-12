@@ -79,6 +79,7 @@ async function getProducts(category: string, sort?: string, sub?: string): Promi
     .from('products')
     .select('*')
     .eq('category', category)
+    .neq('hidden', true)
 
   if (sub) query = query.eq('subcategory', sub)
 
@@ -99,6 +100,7 @@ async function getSubcategories(category: string): Promise<string[]> {
     .from('products')
     .select('subcategory')
     .eq('category', category)
+    .neq('hidden', true)
     .not('subcategory', 'is', null)
 
   if (error || !data) return []
