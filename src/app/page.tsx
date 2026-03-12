@@ -6,8 +6,10 @@ import { supabase } from '@/lib/supabase'
 import ProductCard from '@/components/ProductCard'
 import { Product } from '@/types'
 import { Leaf, Recycle, Award, Heart } from 'lucide-react'
+import { unstable_noStore as noStore } from 'next/cache'
 
 async function getBestsellers(): Promise<Product[]> {
+  noStore()
   try {
     const { data, error } = await supabase
       .from('products')

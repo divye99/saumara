@@ -6,6 +6,7 @@ import ProductCard from '@/components/ProductCard'
 import { Product } from '@/types'
 import SortSelect from './SortSelect'
 import { Metadata } from 'next'
+import { unstable_noStore as noStore } from 'next/cache'
 
 interface PageProps {
   params: { category: string }
@@ -73,6 +74,7 @@ const categoryConfig: Record<string, { title: string; description: string; hero:
 }
 
 async function getProducts(category: string, sort?: string, sub?: string): Promise<Product[]> {
+  noStore()
   let query = supabase
     .from('products')
     .select('*')
