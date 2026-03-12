@@ -3,6 +3,7 @@ import { notFound } from 'next/navigation'
 import ProductPageClient from './ProductPageClient'
 import { Product } from '@/types'
 import { Metadata } from 'next'
+import { unstable_noStore as noStore } from 'next/cache'
 
 export const dynamic = 'force-dynamic'
 
@@ -11,6 +12,7 @@ interface PageProps {
 }
 
 async function getProduct(slug: string): Promise<Product | null> {
+  noStore()
   const { data, error } = await supabase
     .from('products')
     .select('*')
@@ -22,6 +24,7 @@ async function getProduct(slug: string): Promise<Product | null> {
 }
 
 async function getRelatedProducts(category: string, currentSlug: string): Promise<Product[]> {
+  noStore()
   const { data, error } = await supabase
     .from('products')
     .select('*')
