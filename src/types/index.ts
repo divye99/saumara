@@ -1,3 +1,10 @@
+// Meta Pixel global type
+declare global {
+  interface Window {
+    fbq: (...args: unknown[]) => void
+  }
+}
+
 export interface Product {
   id: string
   name: string

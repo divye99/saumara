@@ -48,6 +48,17 @@ export function CartProvider({ children }: { children: ReactNode }) {
       return [...prev, { product, quantity }]
     })
     setIsOpen(true)
+
+    // Meta Pixel: AddToCart event
+    if (typeof window !== 'undefined' && typeof window.fbq === 'function') {
+      window.fbq('track', 'AddToCart', {
+        content_name: product.name,
+        content_ids: [product.id],
+        content_type: 'product',
+        value: product.price * quantity,
+        currency: 'INR',
+      })
+    }
   }
 
   const removeItem = (productId: string) => {

@@ -2,12 +2,24 @@
 
 import { useSearchParams } from 'next/navigation'
 import Link from 'next/link'
-import { Suspense } from 'react'
+import { Suspense, useEffect } from 'react'
 import { CheckCircle } from 'lucide-react'
 
 function ConfirmationContent() {
   const searchParams = useSearchParams()
   const orderNumber = searchParams.get('order') || 'SAU-XXXXX'
+  const total = searchParams.get('total')
+
+  // Meta Pixel: Purchase event
+  useEffect(() => {
+    if (typeof window !== 'undefined' && typeof window.fbq === 'function' && orderNumber !== 'SAU-XXXXX') {
+      window.fbq('track', 'Purchase', {
+        value: total ? parseFloat(total) : 0,
+        currency: 'INR',
+        content_type: 'product',
+      })
+    }
+  }, [orderNumber, total])
 
   return (
     <div className="min-h-screen bg-warm-white flex items-center justify-center pt-20 px-6">

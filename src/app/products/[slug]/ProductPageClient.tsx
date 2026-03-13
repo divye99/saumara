@@ -1,6 +1,6 @@
 'use client'
 
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import Image from 'next/image'
 import Link from 'next/link'
 import { useCart } from '@/context/CartContext'
@@ -34,6 +34,19 @@ export default function ProductPageClient({
   const [openSection, setOpenSection] = useState<string | null>('description')
   const [wishlisted, setWishlisted] = useState(false)
   const { addItem } = useCart()
+
+  // Meta Pixel: ViewContent event
+  useEffect(() => {
+    if (typeof window !== 'undefined' && typeof window.fbq === 'function') {
+      window.fbq('track', 'ViewContent', {
+        content_name: product.name,
+        content_ids: [product.id],
+        content_type: 'product',
+        value: product.price,
+        currency: 'INR',
+      })
+    }
+  }, [product.id, product.name, product.price])
 
   const handleAddToCart = () => {
     addItem(product, quantity)

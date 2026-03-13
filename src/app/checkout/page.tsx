@@ -145,7 +145,7 @@ export default function CheckoutPage() {
           })
           const { orderNumber } = await saveRes.json()
           clearCart()
-          router.push(`/order-confirmation?order=${orderNumber}`)
+          router.push(`/order-confirmation?order=${orderNumber}&total=${total}`)
         },
         modal: {
           ondismiss: () => {
