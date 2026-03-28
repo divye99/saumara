@@ -174,7 +174,7 @@ function PDPImageGallery({
   onSelectImage: (index: number) => void
 }) {
   return (
-    <div className="lg:w-[58%] xl:w-[60%] flex-shrink-0">
+    <div className="w-full min-w-0 lg:w-[58%] xl:w-[60%] lg:flex-shrink-0">
       <div className="flex flex-row-reverse gap-3">
         <div className="flex-1">
           <div className="relative aspect-square bg-cream overflow-hidden">
@@ -260,7 +260,7 @@ function PDPBuyBox({
   setWishlisted: (value: (prev: boolean) => boolean) => void
 }) {
   return (
-    <div className="lg:w-[42%] xl:w-[40%] lg:sticky lg:top-24 lg:self-start flex flex-col">
+    <div className="w-full min-w-0 flex flex-col">
       <p className="text-[11px] tracking-[0.22em] uppercase font-light text-gold mb-2">
         {product.subcategory
           ? product.subcategory.replace(/-/g, ' ')
@@ -276,11 +276,11 @@ function PDPBuyBox({
       </p>
 
       {keyIngredient && (
-        <div className="flex items-start gap-2 mb-5">
-          <span className="text-[11px] tracking-[0.12em] uppercase text-text-dark font-medium whitespace-nowrap mt-0.5">
+        <div className="flex flex-wrap items-start gap-x-2 gap-y-1 mb-5">
+          <span className="text-[11px] tracking-[0.12em] uppercase text-text-dark font-medium shrink-0 mt-0.5">
             Key ingredient:
           </span>
-          <span className="text-[13px] text-text-medium font-light italic leading-snug">
+          <span className="text-[13px] text-text-medium font-light italic leading-snug min-w-0 flex-1 basis-[12rem]">
             {keyIngredient}
           </span>
         </div>
@@ -362,7 +362,7 @@ function PDPBuyBox({
           <circle cx="5.5" cy="18.5" r="2.5" />
           <circle cx="18.5" cy="18.5" r="2.5" />
         </svg>
-        <p className="text-[11px] text-text-medium font-light leading-snug">
+        <p className="text-[11px] text-text-medium font-light leading-snug min-w-0">
           Free delivery on orders over{' '}
           <span className="text-forest-green font-medium">₹{FREE_SHIPPING_THRESHOLD.toLocaleString('en-IN')}</span>
           {' · '}
@@ -370,13 +370,13 @@ function PDPBuyBox({
         </p>
       </div>
 
-      <div className="flex items-start justify-between gap-1 mb-8 pb-7 border-b border-cream">
+      <div className="grid grid-cols-5 gap-2 sm:gap-3 mb-8 pb-7 border-b border-cream w-full">
         {usps.map(({ icon: Icon, label }) => (
-          <div key={label} className="flex flex-col items-center gap-2 min-w-[48px]">
-            <div className="w-9 h-9 rounded-full bg-cream flex items-center justify-center">
+          <div key={label} className="flex flex-col items-center gap-2 min-w-0">
+            <div className="w-9 h-9 rounded-full bg-cream flex items-center justify-center shrink-0">
               <Icon size={14} className="text-forest-green" strokeWidth={1.5} />
             </div>
-            <span className="text-[9px] tracking-[0.06em] uppercase text-text-medium font-light text-center leading-tight">
+            <span className="text-[9px] tracking-[0.06em] uppercase text-text-medium font-light text-center leading-tight px-0.5 break-words">
               {label}
             </span>
           </div>
@@ -396,7 +396,7 @@ function PDPAccordions({
   toggle: (section: string) => void
 }) {
   return (
-    <div className="border-t border-cream">
+    <div className="w-full min-w-0 border-t border-cream mt-2">
       {sections.map(section => (
         <div key={section.key} className="border-b border-cream">
           <button
@@ -560,10 +560,10 @@ function PDPIngredientSpotlights({
           {keyIngredients.map((ing, i) => (
             <div
               key={ing.name}
-              className="grid grid-cols-1 md:grid-cols-2 min-h-[420px]"
+              className="grid grid-cols-1 md:grid-cols-2 gap-0"
             >
               <div
-                className={`relative min-h-[300px] md:min-h-[420px] overflow-hidden bg-cream ${
+                className={`relative min-h-[220px] sm:min-h-[280px] md:min-h-[380px] overflow-hidden bg-cream ${
                   i % 2 === 1 ? 'md:order-2' : 'md:order-1'
                 }`}
               >
@@ -834,14 +834,14 @@ export default function ProductPageClient({
       <PDPBreadcrumb product={product} />
 
       <section className="max-w-[1320px] mx-auto px-6 lg:px-12 pb-24">
-        <div className="flex flex-col lg:flex-row gap-10 lg:gap-14 xl:gap-20">
+        <div className="flex flex-col lg:flex-row lg:items-start gap-10 lg:gap-10 xl:gap-14">
           <PDPImageGallery
             product={product}
             images={images}
             selectedImage={selectedImage}
             onSelectImage={setSelectedImage}
           />
-          <div className="flex-1 lg:w-[42%] xl:w-[40%] lg:sticky lg:top-24 lg:self-start flex flex-col">
+          <div className="w-full min-w-0 lg:w-[42%] xl:w-[40%] lg:flex-shrink-0 lg:sticky lg:top-24 lg:self-start flex flex-col gap-0">
             <PDPBuyBox
               product={product}
               quantity={quantity}
