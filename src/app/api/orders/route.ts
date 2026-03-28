@@ -1,4 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server'
+import { ZodError } from 'zod'
 import { supabase } from '@/lib/supabase'
 import { createOrder, CreateOrderSchema } from '@/lib/orderService'
 
@@ -11,12 +12,9 @@ export async function POST(request: NextRequest) {
 
     return NextResponse.json({ order, orderNumber })
   } catch (error) {
-    if (error instanceof Error && 'issues' in error) {
+    if (error instanceof ZodError) {
       return NextResponse.json({ error: 'Invalid order payload' }, { status: 400 })
     }
-    console.error(error)
-    return NextResponse.json({ error: 'Failed to create order' }, { status: 500 })
-  } catch (error) {
     console.error(error)
     return NextResponse.json({ error: 'Failed to create order' }, { status: 500 })
   }
