@@ -1,52 +1,21 @@
 import { NextRequest, NextResponse } from 'next/server'
 import { supabase } from '@/lib/supabase'
-
-function generateOrderNumber(): string {
-  const timestamp = Date.now().toString(36).toUpperCase()
-  const random = Math.random().toString(36).substring(2, 6).toUpperCase()
-  return `SAU-${timestamp}-${random}`
-}
+import { createOrder, CreateOrderSchema } from '@/lib/orderService'
 
 export async function POST(request: NextRequest) {
   try {
-    const body = await request.json()
-    const {
-      customerName,
-      customerEmail,
-      customerPhone,
-      shippingAddress,
-      items,
-      subtotal,
-      shipping,
-      total,
-      razorpayOrderId,
-      razorpayPaymentId,
-    } = body
+    const json = await request.json()
+    const parsed = CreateOrderSchema.parse(json)
 
-    const orderNumber = generateOrderNumber()
+    const { order, orderNumber } = await createOrder(parsed)
 
-    const { data, error } = await supabase
-      .from('orders')
-      .insert({
-        orderNumber,
-        customerName,
-        customerEmail,
-        customerPhone,
-        shippingAddress,
-        items,
-        subtotal,
-        shipping,
-        total,
-        status: 'confirmed',
-        razorpayOrderId,
-        razorpayPaymentId,
-      })
-      .select()
-      .single()
-
-    if (error) throw error
-
-    return NextResponse.json({ order: data, orderNumber })
+    return NextResponse.json({ order, orderNumber })
+  } catch (error) {
+    if (error instanceof Error && 'issues' in error) {
+      return NextResponse.json({ error: 'Invalid order payload' }, { status: 400 })
+    }
+    console.error(error)
+    return NextResponse.json({ error: 'Failed to create order' }, { status: 500 })
   } catch (error) {
     console.error(error)
     return NextResponse.json({ error: 'Failed to create order' }, { status: 500 })

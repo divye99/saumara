@@ -5,6 +5,7 @@ import { useCart } from '@/context/CartContext'
 import Image from 'next/image'
 import { useRouter } from 'next/navigation'
 import toast from 'react-hot-toast'
+import { FREE_SHIPPING_THRESHOLD, STANDARD_SHIPPING_FEE, DELIVERY_COPY } from '@/config/commerce'
 
 declare global {
   interface Window {
@@ -63,7 +64,7 @@ export default function CheckoutPage() {
     pincode: '',
   })
 
-  const shipping = subtotal > 2000 ? 0 : 199
+  const shipping = subtotal > FREE_SHIPPING_THRESHOLD ? 0 : STANDARD_SHIPPING_FEE
   const total = subtotal + shipping
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
@@ -332,7 +333,7 @@ export default function CheckoutPage() {
               <p className="text-xs tracking-widest uppercase text-forest-green">The Saumara Promise</p>
               <div className="space-y-2">
                 {[
-                  '3–5 day delivery across India',
+                  DELIVERY_COPY,
                   'Carbon-neutral shipping',
                   'Easy 30-day returns',
                   '100% authentic, natural ingredients',

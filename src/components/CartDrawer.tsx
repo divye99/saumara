@@ -5,11 +5,12 @@ import Image from 'next/image'
 import Link from 'next/link'
 import { X, Minus, Plus, ShoppingBag } from 'lucide-react'
 import { motion, AnimatePresence } from 'framer-motion'
+import { FREE_SHIPPING_THRESHOLD, STANDARD_SHIPPING_FEE } from '@/config/commerce'
 
 export default function CartDrawer() {
   const { items, removeItem, updateQuantity, subtotal, isOpen, closeCart, totalItems } = useCart()
 
-  const shipping = subtotal > 2000 ? 0 : 199
+  const shipping = subtotal > FREE_SHIPPING_THRESHOLD ? 0 : STANDARD_SHIPPING_FEE
   const total = subtotal + shipping
 
   return (
@@ -124,9 +125,9 @@ export default function CartDrawer() {
                   <span>Shipping</span>
                   <span>{shipping === 0 ? 'Free' : `₹${shipping}`}</span>
                 </div>
-                {shipping > 0 && (
+                {shipping > 0 && subtotal < FREE_SHIPPING_THRESHOLD && (
                   <p className="text-xs text-gold">
-                    Add ₹{(2000 - subtotal).toLocaleString('en-IN')} more for free shipping
+                    Add ₹{(FREE_SHIPPING_THRESHOLD - subtotal).toLocaleString('en-IN')} more for free shipping
                   </p>
                 )}
                 <div className="flex justify-between font-serif text-lg font-light text-forest-green border-t border-cream pt-4">

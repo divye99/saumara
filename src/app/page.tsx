@@ -1,15 +1,13 @@
-export const dynamic = 'force-dynamic'
-
 import Image from 'next/image'
 import Link from 'next/link'
 import { supabase } from '@/lib/supabase'
 import ProductCard from '@/components/ProductCard'
 import { Product } from '@/types'
 import { Leaf, Recycle, Award, Heart } from 'lucide-react'
-import { unstable_noStore as noStore } from 'next/cache'
+
+export const revalidate = 300
 
 async function getBestsellers(): Promise<Product[]> {
-  noStore()
   try {
     const { data, error } = await supabase
       .from('products')
@@ -72,13 +70,9 @@ const instagramImages = [
   'https://res.cloudinary.com/dcgevdwcg/image/upload/v1772540936/IG_6_koaa6s.png',
 ]
 
-export default async function HomePage() {
-  const bestsellers = await getBestsellers()
-
+function HomeHeroSection() {
   return (
-    <div className="bg-warm-white">
-      {/* HERO */}
-      <section className="relative h-screen flex items-center justify-center overflow-hidden">
+    <section className="relative h-screen flex items-center justify-center overflow-hidden">
         <div className="absolute inset-0">
           <Image
             src="https://res.cloudinary.com/dcgevdwcg/image/upload/v1772541807/Hero_Banner_Prompt_lmygmn.png"
@@ -116,8 +110,11 @@ export default async function HomePage() {
           <div className="w-px h-12 bg-cream/30 animate-pulse" />
         </div>
       </section>
+  )
+}
 
-      {/* BRAND STATEMENT */}
+function HomeBrandStatementSection() {
+  return (
       <section className="py-24 px-6 text-center bg-cream">
         <div className="max-w-3xl mx-auto">
           <p className="section-subtitle mb-6">The Saumara Promise</p>
@@ -131,8 +128,11 @@ export default async function HomePage() {
           </p>
         </div>
       </section>
+  )
+}
 
-      {/* COLLECTIONS */}
+function HomeCollectionsSection() {
+  return (
       <section className="py-20 px-6 lg:px-12 max-w-7xl mx-auto">
         <div className="text-center mb-16">
           <p className="section-subtitle mb-4">Shop by Ritual</p>
@@ -163,9 +163,13 @@ export default async function HomePage() {
           ))}
         </div>
       </section>
+  )
+}
 
-      {/* BESTSELLERS */}
-      {bestsellers.length > 0 && (
+function HomeBestsellersSection({ bestsellers }: { bestsellers: Product[] }) {
+  if (!bestsellers.length) return null
+
+  return (
         <section className="py-20 px-6 lg:px-12 max-w-7xl mx-auto">
           <div className="flex items-end justify-between mb-12">
             <div>
@@ -182,9 +186,11 @@ export default async function HomePage() {
             ))}
           </div>
         </section>
-      )}
+  )
+}
 
-      {/* SUSTAINABILITY */}
+function HomeSustainabilitySection() {
+  return (
       <section className="py-24 bg-forest-green text-cream" id="sustainability">
         <div className="max-w-7xl mx-auto px-6 lg:px-12">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
@@ -214,8 +220,11 @@ export default async function HomePage() {
           </div>
         </div>
       </section>
+  )
+}
 
-      {/* BRAND STORY TEASER */}
+function HomeStoryTeaserSection() {
+  return (
       <section className="py-24 px-6 lg:px-12 max-w-7xl mx-auto">
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
           <div className="relative aspect-square overflow-hidden">
@@ -246,8 +255,11 @@ export default async function HomePage() {
           </div>
         </div>
       </section>
+  )
+}
 
-      {/* INGREDIENT PROMISE */}
+function HomeIngredientPromiseSection() {
+  return (
       <section className="py-20 bg-cream px-6 lg:px-12">
         <div className="max-w-7xl mx-auto">
           <div className="text-center mb-16">
@@ -272,8 +284,11 @@ export default async function HomePage() {
           </div>
         </div>
       </section>
+  )
+}
 
-      {/* INSTAGRAM GRID */}
+function HomeInstagramSection() {
+  return (
       <section className="py-20 px-6 lg:px-12">
         <div className="max-w-7xl mx-auto">
           <div className="text-center mb-12">
@@ -296,13 +311,33 @@ export default async function HomePage() {
           </div>
         </div>
       </section>
+  )
+}
 
-      {/* FREE SHIPPING BANNER */}
+function HomeShippingBanner() {
+  return (
       <section className="py-6 bg-gold text-white text-center">
         <p className="text-xs tracking-widest uppercase font-light">
           Free shipping on all orders above ₹2,000 · Carbon-neutral delivery across India
         </p>
       </section>
+  )
+}
+
+export default async function HomePage() {
+  const bestsellers = await getBestsellers()
+
+  return (
+    <div className="bg-warm-white">
+      <HomeHeroSection />
+      <HomeBrandStatementSection />
+      <HomeCollectionsSection />
+      <HomeBestsellersSection bestsellers={bestsellers} />
+      <HomeSustainabilitySection />
+      <HomeStoryTeaserSection />
+      <HomeIngredientPromiseSection />
+      <HomeInstagramSection />
+      <HomeShippingBanner />
     </div>
   )
 }
