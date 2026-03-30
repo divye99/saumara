@@ -87,12 +87,6 @@ img {
   backdrop-filter: blur(2px);
 }
 
-/* Custom cursor */
-.cursor-none,
-.cursor-none * {
-  cursor: none !important;
-}
-
 /* Performance hint for parallax */
 .will-change-transform {
   will-change: transform;
