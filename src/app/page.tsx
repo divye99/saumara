@@ -11,19 +11,15 @@ export const revalidate = 300
 
 async function getBestsellers(): Promise<Product[]> {
   try {
-    const { data, error } = await supabase
-      .from('products')
-      .select('*')
-      .eq('isBestseller', true)
-      .neq('hidden', true)
-      .order('createdAt', { ascending: true })
-      .limit(8)
+    const [sakuraRes, otherRes] = await Promise.all([
+      supabase.from('products').select('*').eq('slug', 'ritual-of-sakura-body-wash').single(),
+      supabase.from('products').select('*').eq('isBestseller', true).neq('hidden', true).neq('slug', 'ritual-of-sakura-body-wash').order('createdAt', { ascending: true }).limit(1),
+    ])
 
-    if (error) {
-      console.error('Supabase error:', error)
-      return []
-    }
-    return (data || []) as Product[]
+    const results: Product[] = []
+    if (sakuraRes.data) results.push(sakuraRes.data as Product)
+    if (otherRes.data) results.push(...(otherRes.data as Product[]))
+    return results
   } catch {
     return []
   }
@@ -139,7 +135,7 @@ function HomeBestsellersSection({ bestsellers }: { bestsellers: Product[] }) {
               View All
             </Link>
           </div>
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-6">
+          <div className="grid grid-cols-2 gap-6 max-w-2xl mx-auto">
             {bestsellers.map(product => (
               <ProductCard key={product.id} product={product} />
             ))}
