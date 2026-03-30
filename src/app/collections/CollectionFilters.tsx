@@ -44,14 +44,24 @@ export default function CollectionFilters({ total }: { total: number }) {
   const activeCategory = searchParams.get('category') || ''
   const activeSub = searchParams.get('sub') || ''
 
+  const activeSort = searchParams.get('sort') || 'featured'
+
   const setFilter = useCallback((category: string, sub?: string) => {
     const params = new URLSearchParams()
     if (category) params.set('category', category)
     if (sub) params.set('sub', sub)
+    if (activeSort !== 'featured') params.set('sort', activeSort)
     router.push(`/collections?${params.toString()}`)
-  }, [router])
+  }, [router, activeSort])
 
   const clearFilters = () => router.push('/collections')
+
+  const setSort = (sort: string) => {
+    const params = new URLSearchParams(searchParams.toString())
+    if (sort === 'featured') params.delete('sort')
+    else params.set('sort', sort)
+    router.push(`/collections?${params.toString()}`)
+  }
 
   const activecat = categories.find(c => c.value === activeCategory)
 
@@ -103,12 +113,27 @@ export default function CollectionFilters({ total }: { total: number }) {
         </div>
       )}
 
-      {/* Product count */}
-      <p className="text-[11px] text-text-medium/60 font-light tracking-wide mt-4">
-        {total} {total === 1 ? 'product' : 'products'}
-        {activeCategory && ` in ${activecat?.label}`}
-        {activeSub && ` · ${activecat?.sub.find(s => s.value === activeSub)?.label}`}
-      </p>
+      {/* Count + Sort row */}
+      <div className="flex items-center justify-between mt-4">
+        <p className="text-[11px] text-text-medium/60 font-light tracking-wide">
+          {total} {total === 1 ? 'product' : 'products'}
+          {activeCategory && ` in ${activecat?.label}`}
+          {activeSub && ` · ${activecat?.sub.find(s => s.value === activeSub)?.label}`}
+        </p>
+        <div className="flex items-center gap-2">
+          <span className="text-[11px] text-text-medium font-light">Sort:</span>
+          <select
+            className="text-[11px] border border-cream px-3 py-2 bg-transparent text-text-medium focus:outline-none focus:border-forest-green"
+            value={activeSort}
+            onChange={e => setSort(e.target.value)}
+          >
+            <option value="featured">Featured</option>
+            <option value="bestsellers">Best Sellers</option>
+            <option value="price-asc">Price: Low to High</option>
+            <option value="price-desc">Price: High to Low</option>
+          </select>
+        </div>
+      </div>
     </div>
   )
 }

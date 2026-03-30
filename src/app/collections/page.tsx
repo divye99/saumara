@@ -13,10 +13,10 @@ export const metadata: Metadata = {
 }
 
 interface PageProps {
-  searchParams: { category?: string; sub?: string }
+  searchParams: { category?: string; sub?: string; sort?: string }
 }
 
-async function getProducts(category?: string, sub?: string): Promise<Product[]> {
+async function getProducts(category?: string, sub?: string, sort?: string): Promise<Product[]> {
   let query = supabase
     .from('products')
     .select('*')
@@ -28,7 +28,10 @@ async function getProducts(category?: string, sub?: string): Promise<Product[]> 
     query = query.eq('category', category)
   }
 
-  query = query.order('createdAt', { ascending: true })
+  if (sort === 'price-asc') query = query.order('price', { ascending: true })
+  else if (sort === 'price-desc') query = query.order('price', { ascending: false })
+  else if (sort === 'bestsellers') query = query.order('isBestseller', { ascending: false }).order('createdAt', { ascending: true })
+  else query = query.order('createdAt', { ascending: true })
 
   const { data, error } = await query.range(0, 499)
   if (error) return []
@@ -36,7 +39,7 @@ async function getProducts(category?: string, sub?: string): Promise<Product[]> 
 }
 
 export default async function CollectionsPage({ searchParams }: PageProps) {
-  const products = await getProducts(searchParams.category, searchParams.sub)
+  const products = await getProducts(searchParams.category, searchParams.sub, searchParams.sort)
 
   return (
     <div className="bg-warm-white min-h-screen">
