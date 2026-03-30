@@ -62,7 +62,7 @@ export default function HomeHeroSection() {
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8, ease: easeOutQuart, delay: 0.55 }}
         >
-          <Link href="/collections/bath-body" className="btn-primary">
+          <Link href="/collections" className="btn-primary">
             Explore Collection
           </Link>
           <Link href="/about" className="border border-cream/50 text-cream px-8 py-3 text-sm tracking-widest uppercase font-light hover:bg-cream/10 transition-all duration-300">

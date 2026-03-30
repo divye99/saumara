@@ -99,9 +99,18 @@ export default function NavSidebar({ open, onClose }: NavSidebarProps) {
 
             {/* Categories */}
             <div className="flex-1 px-8 py-6">
-              <p className="text-[10px] tracking-[0.3em] uppercase text-gold font-light mb-6">
-                Collections
-              </p>
+              <div className="flex items-center justify-between mb-6">
+                <p className="text-[10px] tracking-[0.3em] uppercase text-gold font-light">
+                  Collections
+                </p>
+                <Link
+                  href="/collections"
+                  onClick={onClose}
+                  className="text-[10px] tracking-[0.15em] uppercase text-text-medium font-light hover:text-forest-green transition-colors border-b border-current pb-0.5"
+                >
+                  View All
+                </Link>
+              </div>
 
               <div className="space-y-0">
                 {categories.map(cat => (
