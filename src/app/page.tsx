@@ -4,6 +4,8 @@ import { supabase } from '@/lib/supabase'
 import ProductCard from '@/components/ProductCard'
 import { Product } from '@/types'
 import { Leaf, Recycle, Award, Heart } from 'lucide-react'
+import HomeHeroSection from '@/components/HomeHeroSection'
+import AnimateOnView from '@/components/AnimateOnView'
 
 export const revalidate = 300
 
@@ -69,49 +71,6 @@ const instagramImages = [
   'https://res.cloudinary.com/dcgevdwcg/image/upload/v1772540936/IG_5_zhorsb.png',
   'https://res.cloudinary.com/dcgevdwcg/image/upload/v1772540936/IG_6_koaa6s.png',
 ]
-
-function HomeHeroSection() {
-  return (
-    <section className="relative h-screen flex items-center justify-center overflow-hidden">
-        <div className="absolute inset-0">
-          <Image
-            src="https://res.cloudinary.com/dcgevdwcg/image/upload/v1772541807/Hero_Banner_Prompt_lmygmn.png"
-            alt="Saumara — Rituals for the Mindful Self"
-            fill
-            priority
-            className="object-cover"
-          />
-          <div className="absolute inset-0 bg-gradient-to-b from-forest-green/60 via-forest-green/40 to-forest-green/70" />
-        </div>
-        <div className="relative z-10 text-center text-cream px-6 max-w-4xl mx-auto">
-          <p className="text-xs tracking-[0.4em] uppercase text-gold mb-8 animate-fade-in">
-            Premium Bath · Skincare · Home Fragrance
-          </p>
-          <h1 className="font-serif text-6xl md:text-8xl lg:text-9xl font-light leading-none mb-8 animate-slide-up">
-            Your Ritual
-            <br />
-            <em className="italic">Begins Here</em>
-          </h1>
-          <p className="text-cream/80 text-base md:text-lg font-light max-w-lg mx-auto mb-12 leading-relaxed">
-            Crafted from the world&apos;s rarest botanicals. Fully transparent ingredients. Radically sustainable.
-          </p>
-          <div className="flex flex-col sm:flex-row gap-4 justify-center">
-            <Link href="/collections/bath-body" className="btn-primary">
-              Explore Collection
-            </Link>
-            <Link href="/about" className="border border-cream/50 text-cream px-8 py-3 text-sm tracking-widest uppercase font-light hover:bg-cream/10 transition-all duration-300">
-              Our Story
-            </Link>
-          </div>
-        </div>
-        {/* Scroll indicator */}
-        <div className="absolute bottom-10 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2 text-cream/60">
-          <span className="text-xs tracking-widest uppercase">Scroll</span>
-          <div className="w-px h-12 bg-cream/30 animate-pulse" />
-        </div>
-      </section>
-  )
-}
 
 function HomeBrandStatementSection() {
   return (
@@ -330,13 +289,13 @@ export default async function HomePage() {
   return (
     <div className="bg-warm-white">
       <HomeHeroSection />
-      <HomeBrandStatementSection />
-      <HomeCollectionsSection />
-      <HomeBestsellersSection bestsellers={bestsellers} />
-      <HomeSustainabilitySection />
-      <HomeStoryTeaserSection />
-      <HomeIngredientPromiseSection />
-      <HomeInstagramSection />
+      <AnimateOnView delay={0}><HomeBrandStatementSection /></AnimateOnView>
+      <AnimateOnView delay={0.05}><HomeCollectionsSection /></AnimateOnView>
+      <AnimateOnView delay={0}><HomeBestsellersSection bestsellers={bestsellers} /></AnimateOnView>
+      <AnimateOnView delay={0}><HomeSustainabilitySection /></AnimateOnView>
+      <AnimateOnView delay={0}><HomeStoryTeaserSection /></AnimateOnView>
+      <AnimateOnView delay={0}><HomeIngredientPromiseSection /></AnimateOnView>
+      <AnimateOnView delay={0}><HomeInstagramSection /></AnimateOnView>
       <HomeShippingBanner />
     </div>
   )

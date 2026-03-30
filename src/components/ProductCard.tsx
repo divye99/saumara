@@ -27,7 +27,7 @@ export default function ProductCard({ product }: ProductCardProps) {
           src={product.imageUrl}
           alt={product.name}
           fill
-          className="object-cover transition-transform duration-700 group-hover:scale-105"
+          className="object-cover transition-transform duration-1000 group-hover:scale-[1.03]"
           sizes="(max-width: 768px) 50vw, 25vw"
         />
         {/* Badges */}
@@ -44,7 +44,7 @@ export default function ProductCard({ product }: ProductCardProps) {
           )}
         </div>
         {/* Quick add */}
-        <div className="absolute bottom-0 left-0 right-0 bg-forest-green/90 text-cream py-3 translate-y-full group-hover:translate-y-0 transition-transform duration-300 flex items-center justify-center gap-2">
+        <div className="absolute bottom-0 left-0 right-0 bg-forest-green/90 text-cream py-3 translate-y-full group-hover:translate-y-0 transition-transform duration-500 flex items-center justify-center gap-2">
           <ShoppingBag size={14} />
           <button
             onClick={handleAddToCart}
@@ -58,7 +58,7 @@ export default function ProductCard({ product }: ProductCardProps) {
         <p className="text-xs text-gold tracking-widest uppercase mb-1 capitalize">
           {product.subcategory?.replace('-', ' ') || product.category.replace('-', ' ')}
         </p>
-        <h3 className="font-serif text-base font-light text-text-dark leading-snug mb-2">
+        <h3 className="font-serif text-base font-light text-text-dark leading-snug mb-2 group-hover:text-medium-green transition-colors duration-500">
           {product.name}
         </h3>
         <p className="text-sm font-light text-text-medium">

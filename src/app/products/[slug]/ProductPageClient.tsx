@@ -3,6 +3,7 @@
 import { useState, useEffect } from 'react'
 import Image from 'next/image'
 import Link from 'next/link'
+import { motion } from 'framer-motion'
 import { useCart } from '@/context/CartContext'
 import { Product } from '@/types'
 import {
@@ -177,7 +178,12 @@ function PDPImageGallery({
     <div className="w-full min-w-0 lg:w-[58%] xl:w-[60%] lg:flex-shrink-0">
       <div className="flex flex-row-reverse gap-3">
         <div className="flex-1">
-          <div className="relative aspect-square bg-cream overflow-hidden">
+          <motion.div
+            className="relative aspect-square bg-cream overflow-hidden"
+            initial={{ opacity: 0, scale: 1.02 }}
+            animate={{ opacity: 1, scale: 1 }}
+            transition={{ duration: 0.9, ease: [0.25, 0.46, 0.45, 0.94] }}
+          >
             <Image
               src={images[selectedImage]}
               alt={product.name}
@@ -200,7 +206,7 @@ function PDPImageGallery({
                 </span>
               </div>
             )}
-          </div>
+          </motion.div>
           {images.length > 1 && (
             <div className="flex lg:hidden gap-2 mt-3">
               {images.map((img, i) => (
@@ -841,7 +847,12 @@ export default function ProductPageClient({
             selectedImage={selectedImage}
             onSelectImage={setSelectedImage}
           />
-          <div className="w-full min-w-0 lg:w-[42%] xl:w-[40%] lg:flex-shrink-0 lg:sticky lg:top-24 lg:self-start flex flex-col gap-0">
+          <motion.div
+            className="w-full min-w-0 lg:w-[42%] xl:w-[40%] lg:flex-shrink-0 lg:sticky lg:top-24 lg:self-start flex flex-col gap-0"
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.8, ease: [0.25, 0.46, 0.45, 0.94], delay: 0.2 }}
+          >
             <PDPBuyBox
               product={product}
               quantity={quantity}
@@ -852,7 +863,7 @@ export default function ProductPageClient({
               setWishlisted={setWishlisted}
             />
             <PDPAccordions sections={sections} openSection={openSection} toggle={toggle} />
-          </div>
+          </motion.div>
         </div>
       </section>
 

@@ -6,6 +6,7 @@ import Footer from '@/components/Footer'
 import CartDrawer from '@/components/CartDrawer'
 import { Toaster } from 'react-hot-toast'
 import MetaPixel from '@/components/MetaPixel'
+import CustomCursor from '@/components/CustomCursor'
 
 const OG_IMAGE = 'https://res.cloudinary.com/dcgevdwcg/image/upload/v1772541807/Hero_Banner_Prompt_lmygmn.png'
 
@@ -113,6 +114,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
       </head>
       <body>
         <MetaPixel />
+        <CustomCursor />
         <CartProvider>
           <Navbar />
           <CartDrawer />

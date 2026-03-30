@@ -1,8 +1,8 @@
 import { supabase } from '@/lib/supabase'
 import { notFound } from 'next/navigation'
-import ProductCard from '@/components/ProductCard'
 import { Product } from '@/types'
 import SortSelect from './SortSelect'
+import ProductGrid from './ProductGrid'
 import { Metadata } from 'next'
 
 export const revalidate = 300
@@ -186,11 +186,7 @@ export default async function CollectionPage({ params, searchParams }: PageProps
             <p className="font-serif text-2xl font-light text-forest-green">No products found</p>
           </div>
         ) : (
-          <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
-            {products.map(product => (
-              <ProductCard key={product.id} product={product} />
-            ))}
-          </div>
+          <ProductGrid products={products} />
         )}
       </section>
     </div>
