@@ -2,14 +2,14 @@
 
 import { useState, useEffect } from 'react'
 import Link from 'next/link'
-import { motion, AnimatePresence } from 'framer-motion'
 import { useCart } from '@/context/CartContext'
-import { ShoppingBag, Menu, X, Search } from 'lucide-react'
+import { ShoppingBag, Menu } from 'lucide-react'
+import NavSidebar from '@/components/NavSidebar'
 
 export default function Navbar() {
   const { totalItems, openCart } = useCart()
   const [scrolled, setScrolled] = useState(false)
-  const [menuOpen, setMenuOpen] = useState(false)
+  const [sidebarOpen, setSidebarOpen] = useState(false)
 
   useEffect(() => {
     const handleScroll = () => setScrolled(window.scrollY > 50)
@@ -17,115 +17,64 @@ export default function Navbar() {
     return () => window.removeEventListener('scroll', handleScroll)
   }, [])
 
-  const navLinks = [
-    { href: '/collections/bath-body', label: 'Bath & Body' },
-    { href: '/collections/skincare', label: 'Skincare' },
-    { href: '/collections/home-fragrance', label: 'Home Fragrance' },
-    { href: '/about', label: 'Our Story' },
-  ]
+  // Prevent body scroll when sidebar is open
+  useEffect(() => {
+    document.body.style.overflow = sidebarOpen ? 'hidden' : ''
+    return () => { document.body.style.overflow = '' }
+  }, [sidebarOpen])
+
+  const iconColor = scrolled ? 'text-forest-green' : 'text-cream'
 
   return (
     <>
       <nav
-        className={`fixed top-0 left-0 right-0 z-50 transition-all duration-500 ${
-          scrolled
-            ? 'bg-warm-white/95 backdrop-blur-md shadow-sm'
-            : 'bg-transparent'
+        className={`fixed top-0 left-0 right-0 z-40 transition-all duration-500 ${
+          scrolled ? 'bg-warm-white/95 backdrop-blur-md shadow-sm' : 'bg-transparent'
         }`}
       >
         <div className="max-w-7xl mx-auto px-6 lg:px-12">
           <div className="flex items-center justify-between h-20">
-            {/* Left nav links */}
-            <div className="hidden md:flex items-center gap-10">
-              {navLinks.slice(0, 2).map(link => (
-                <Link key={link.href} href={link.href} className="nav-link">
-                  {link.label}
-                </Link>
-              ))}
-            </div>
 
-            {/* Logo */}
+            {/* Left — hamburger */}
+            <button
+              onClick={() => setSidebarOpen(true)}
+              aria-label="Open menu"
+              className={`flex items-center gap-2.5 ${iconColor} transition-colors duration-300 hover:opacity-70`}
+            >
+              <Menu size={22} strokeWidth={1.5} />
+              <span className="hidden md:block text-[11px] tracking-[0.25em] uppercase font-light">
+                Menu
+              </span>
+            </button>
+
+            {/* Center — logo */}
             <Link href="/" className="absolute left-1/2 -translate-x-1/2">
               <span
-                className={`font-serif text-2xl tracking-[0.3em] font-light transition-colors duration-300 ${
-                  scrolled ? 'text-forest-green' : 'text-cream'
-                }`}
+                className={`font-serif text-2xl tracking-[0.3em] font-light transition-colors duration-300 ${iconColor}`}
               >
                 SAUMARA
               </span>
             </Link>
 
-            {/* Right nav */}
-            <div className="hidden md:flex items-center gap-10">
-              {navLinks.slice(2).map(link => (
-                <Link key={link.href} href={link.href} className="nav-link">
-                  {link.label}
-                </Link>
-              ))}
-              <button
-                onClick={openCart}
-                className="relative nav-link flex items-center gap-1"
-                aria-label="Open cart"
-              >
-                <ShoppingBag size={18} />
-                {totalItems > 0 && (
-                  <span className="absolute -top-2 -right-2 bg-burgundy text-white text-xs w-4 h-4 flex items-center justify-center rounded-full">
-                    {totalItems}
-                  </span>
-                )}
-              </button>
-            </div>
+            {/* Right — cart */}
+            <button
+              onClick={openCart}
+              className={`relative ${iconColor} transition-colors duration-300 hover:opacity-70`}
+              aria-label="Open cart"
+            >
+              <ShoppingBag size={20} strokeWidth={1.5} />
+              {totalItems > 0 && (
+                <span className="absolute -top-2 -right-2 bg-burgundy text-white text-[10px] w-4 h-4 flex items-center justify-center rounded-full">
+                  {totalItems}
+                </span>
+              )}
+            </button>
 
-            {/* Mobile */}
-            <div className="flex md:hidden items-center gap-4 ml-auto">
-              <button onClick={openCart} className="relative" aria-label="Cart">
-                <ShoppingBag size={20} className={scrolled ? 'text-forest-green' : 'text-cream'} />
-                {totalItems > 0 && (
-                  <span className="absolute -top-2 -right-2 bg-burgundy text-white text-xs w-4 h-4 flex items-center justify-center rounded-full">
-                    {totalItems}
-                  </span>
-                )}
-              </button>
-              <button
-                onClick={() => setMenuOpen(!menuOpen)}
-                aria-label="Menu"
-              >
-                {menuOpen ? (
-                  <X size={22} className={scrolled ? 'text-forest-green' : 'text-cream'} />
-                ) : (
-                  <Menu size={22} className={scrolled ? 'text-forest-green' : 'text-cream'} />
-                )}
-              </button>
-            </div>
           </div>
         </div>
-
-        {/* Mobile menu */}
-        <AnimatePresence>
-          {menuOpen && (
-            <motion.div
-              className="md:hidden bg-warm-white border-t border-cream px-6 py-8 overflow-hidden"
-              initial={{ height: 0, opacity: 0 }}
-              animate={{ height: 'auto', opacity: 1 }}
-              exit={{ height: 0, opacity: 0 }}
-              transition={{ duration: 0.4, ease: [0.25, 0.46, 0.45, 0.94] }}
-            >
-              <div className="flex flex-col gap-6">
-                {navLinks.map(link => (
-                  <Link
-                    key={link.href}
-                    href={link.href}
-                    className="text-sm tracking-widest uppercase text-text-dark font-light"
-                    onClick={() => setMenuOpen(false)}
-                  >
-                    {link.label}
-                  </Link>
-                ))}
-              </div>
-            </motion.div>
-          )}
-        </AnimatePresence>
       </nav>
+
+      <NavSidebar open={sidebarOpen} onClose={() => setSidebarOpen(false)} />
     </>
   )
 }
