@@ -85,7 +85,7 @@ async function getProducts(category: string, sort?: string, sub?: string): Promi
   else if (sort === 'price-desc') query = query.order('price', { ascending: false })
   else query = query.order('createdAt', { ascending: true })
 
-  const { data, error } = await query
+  const { data, error } = await query.range(0, 499)
   if (error) {
     console.error('Supabase error:', error)
     return []
