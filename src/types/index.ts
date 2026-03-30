@@ -1,7 +1,9 @@
-// Meta Pixel global type
+// Global type declarations
 declare global {
   interface Window {
     fbq: (...args: unknown[]) => void
+    gtag: (...args: unknown[]) => void
+    dataLayer: unknown[]
   }
 }
 

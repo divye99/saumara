@@ -2,6 +2,7 @@
 
 import { createContext, useContext, useState, useEffect, ReactNode } from 'react'
 import { CartItem, Product } from '@/types'
+import { gtagEvent } from '@/components/GoogleAnalytics'
 
 interface CartContextType {
   items: CartItem[]
@@ -59,6 +60,18 @@ export function CartProvider({ children }: { children: ReactNode }) {
         currency: 'INR',
       })
     }
+    // GA4: add_to_cart event
+    gtagEvent('add_to_cart', {
+      currency: 'INR',
+      value: product.price * quantity,
+      items: [{
+        item_id: product.id,
+        item_name: product.name,
+        item_category: product.category,
+        price: product.price,
+        quantity,
+      }],
+    })
   }
 
   const removeItem = (productId: string) => {

@@ -4,21 +4,31 @@ import { useSearchParams } from 'next/navigation'
 import Link from 'next/link'
 import { Suspense, useEffect } from 'react'
 import { CheckCircle } from 'lucide-react'
+import { gtagEvent } from '@/components/GoogleAnalytics'
 
 function ConfirmationContent() {
   const searchParams = useSearchParams()
   const orderNumber = searchParams.get('order') || 'SAU-XXXXX'
   const total = searchParams.get('total')
 
-  // Meta Pixel: Purchase event
+  // Meta Pixel + GA4: Purchase events
   useEffect(() => {
-    if (typeof window !== 'undefined' && typeof window.fbq === 'function' && orderNumber !== 'SAU-XXXXX') {
+    if (orderNumber === 'SAU-XXXXX') return
+    const value = total ? parseFloat(total) : 0
+
+    if (typeof window !== 'undefined' && typeof window.fbq === 'function') {
       window.fbq('track', 'Purchase', {
-        value: total ? parseFloat(total) : 0,
+        value,
         currency: 'INR',
         content_type: 'product',
       })
     }
+
+    gtagEvent('purchase', {
+      transaction_id: orderNumber,
+      currency: 'INR',
+      value,
+    })
   }, [orderNumber, total])
 
   return (

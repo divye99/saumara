@@ -6,6 +6,7 @@ import Image from 'next/image'
 import { useRouter } from 'next/navigation'
 import toast from 'react-hot-toast'
 import { FREE_SHIPPING_THRESHOLD, STANDARD_SHIPPING_FEE, DELIVERY_COPY } from '@/config/commerce'
+import { gtagEvent } from '@/components/GoogleAnalytics'
 
 declare global {
   interface Window {
@@ -88,6 +89,19 @@ export default function CheckoutPage() {
   const handleCheckout = async (e: React.FormEvent) => {
     e.preventDefault()
     if (items.length === 0) return
+
+    // GA4: begin_checkout
+    gtagEvent('begin_checkout', {
+      currency: 'INR',
+      value: total,
+      items: items.map(({ product, quantity }) => ({
+        item_id: product.id,
+        item_name: product.name,
+        item_category: product.category,
+        price: product.price,
+        quantity,
+      })),
+    })
 
     setLoading(true)
 

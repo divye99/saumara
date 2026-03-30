@@ -6,6 +6,7 @@ import Link from 'next/link'
 import { motion } from 'framer-motion'
 import { useCart } from '@/context/CartContext'
 import { Product } from '@/types'
+import { gtagEvent } from '@/components/GoogleAnalytics'
 import {
   ShoppingBag,
   Heart,
@@ -132,6 +133,18 @@ function useViewContentPixel(product: Product) {
         currency: 'INR',
       })
     }
+    gtagEvent('view_item', {
+      currency: 'INR',
+      value: product.price,
+      items: [{
+        item_id: product.id,
+        item_name: product.name,
+        item_category: product.category,
+        item_category2: product.subcategory || '',
+        price: product.price,
+        quantity: 1,
+      }],
+    })
   }, [product.id, product.name, product.price])
 }
 
