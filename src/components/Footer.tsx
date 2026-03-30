@@ -13,10 +13,10 @@ export default function Footer() {
               Rituals for the mindful self. Premium bath, body and home fragrance, crafted with the rarest natural ingredients. Delivered across India.
             </p>
             <div className="flex gap-4 mt-6">
-              <a href="https://instagram.com" target="_blank" rel="noopener noreferrer" className="text-cream/60 hover:text-gold transition-colors">
+              <a href="https://www.instagram.com/saumarabeauty/" target="_blank" rel="noopener noreferrer" className="text-cream/60 hover:text-gold transition-colors">
                 <Instagram size={18} />
               </a>
-              <a href="mailto:hello@saumara.com" className="text-cream/60 hover:text-gold transition-colors">
+              <a href="mailto:divye2014@gmail.com" className="text-cream/60 hover:text-gold transition-colors">
                 <Mail size={18} />
               </a>
             </div>

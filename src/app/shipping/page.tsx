@@ -96,21 +96,21 @@ export default function ShippingPage() {
           <div>
             <h2 className="font-serif text-2xl font-light text-forest-green mb-4">Damaged or Incorrect Orders</h2>
             <p className="text-text-medium font-light leading-relaxed text-sm">
-              If your order arrives damaged or you have received an incorrect item, please contact us at <a href="mailto:hello@saumara.com" className="text-forest-green underline underline-offset-2">hello@saumara.com</a> within 48 hours of delivery with your order number and clear photographs of the issue. We will arrange a replacement or full refund at no additional cost to you.
+              If your order arrives damaged or you have received an incorrect item, please contact us at <a href="mailto:divye2014@gmail.com" className="text-forest-green underline underline-offset-2">divye2014@gmail.com</a> within 48 hours of delivery with your order number and clear photographs of the issue. We will arrange a replacement or full refund at no additional cost to you.
             </p>
           </div>
 
           <div>
             <h2 className="font-serif text-2xl font-light text-forest-green mb-4">Returns & Exchanges</h2>
             <p className="text-text-medium font-light leading-relaxed text-sm">
-              We accept returns on unopened, unused products within 7 days of delivery. Opened personal care products cannot be returned for hygiene reasons unless they are defective. To initiate a return, write to <a href="mailto:hello@saumara.com" className="text-forest-green underline underline-offset-2">hello@saumara.com</a> with your order details. Refunds are processed within 5–7 business days of us receiving the returned item.
+              We accept returns on unopened, unused products within 7 days of delivery. Opened personal care products cannot be returned for hygiene reasons unless they are defective. To initiate a return, write to <a href="mailto:divye2014@gmail.com" className="text-forest-green underline underline-offset-2">divye2014@gmail.com</a> with your order details. Refunds are processed within 5–7 business days of us receiving the returned item.
             </p>
           </div>
 
           <div>
             <h2 className="font-serif text-2xl font-light text-forest-green mb-4">Contact Us</h2>
             <p className="text-text-medium font-light leading-relaxed text-sm">
-              For any shipping queries, write to us at <a href="mailto:hello@saumara.com" className="text-forest-green underline underline-offset-2">hello@saumara.com</a>. We aim to respond within 24 hours on business days.
+              For any shipping queries, write to us at <a href="mailto:divye2014@gmail.com" className="text-forest-green underline underline-offset-2">divye2014@gmail.com</a>. We aim to respond within 24 hours on business days.
             </p>
           </div>
 

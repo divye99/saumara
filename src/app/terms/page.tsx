@@ -28,7 +28,7 @@ export default function TermsPage() {
           <div>
             <h2 className="font-serif text-2xl font-light text-forest-green mb-4">1. About Us</h2>
             <p className="text-text-medium font-light leading-relaxed text-sm">
-              Saumara is a premium Indian beauty and lifestyle brand selling bath, body, skincare and home fragrance products via our website saumara.com. For queries, contact us at <a href="mailto:hello@saumara.com" className="text-forest-green underline underline-offset-2">hello@saumara.com</a>.
+              Saumara is a premium Indian beauty and lifestyle brand selling bath, body, skincare and home fragrance products via our website saumara.com. For queries, contact us at <a href="mailto:divye2014@gmail.com" className="text-forest-green underline underline-offset-2">divye2014@gmail.com</a>.
             </p>
           </div>
 
@@ -65,7 +65,7 @@ export default function TermsPage() {
           <div>
             <h2 className="font-serif text-2xl font-light text-forest-green mb-4">5. Cancellations</h2>
             <p className="text-text-medium font-light leading-relaxed text-sm">
-              You may cancel your order within 12 hours of placing it by contacting us at <a href="mailto:hello@saumara.com" className="text-forest-green underline underline-offset-2">hello@saumara.com</a>. Once an order has been dispatched, it cannot be cancelled. For orders paid online, cancellation refunds are processed within 5–7 business days to the original payment method.
+              You may cancel your order within 12 hours of placing it by contacting us at <a href="mailto:divye2014@gmail.com" className="text-forest-green underline underline-offset-2">divye2014@gmail.com</a>. Once an order has been dispatched, it cannot be cancelled. For orders paid online, cancellation refunds are processed within 5–7 business days to the original payment method.
             </p>
           </div>
 
@@ -75,7 +75,7 @@ export default function TermsPage() {
               We accept returns on unused, unopened products in original packaging within 7 days of delivery. Opened personal care products cannot be returned for hygiene reasons unless they are faulty or misdescribed. This is in accordance with the Consumer Protection Act, 2019.
             </p>
             <p className="text-text-medium font-light leading-relaxed text-sm mb-4">
-              To initiate a return, email <a href="mailto:hello@saumara.com" className="text-forest-green underline underline-offset-2">hello@saumara.com</a> with your order number, the item(s) you wish to return, and the reason for return. We will provide return instructions within 48 hours.
+              To initiate a return, email <a href="mailto:divye2014@gmail.com" className="text-forest-green underline underline-offset-2">divye2014@gmail.com</a> with your order number, the item(s) you wish to return, and the reason for return. We will provide return instructions within 48 hours.
             </p>
             <p className="text-text-medium font-light leading-relaxed text-sm">
               Refunds are processed within 5–7 business days of receiving the returned item and verifying its condition. Refunds are credited to the original payment method.
@@ -128,7 +128,7 @@ export default function TermsPage() {
               These Terms are governed by and construed in accordance with the laws of India. Any disputes arising from these Terms or your use of our Site shall be subject to the exclusive jurisdiction of the courts of Mumbai, Maharashtra.
             </p>
             <p className="text-text-medium font-light leading-relaxed text-sm">
-              We encourage you to first contact us at <a href="mailto:hello@saumara.com" className="text-forest-green underline underline-offset-2">hello@saumara.com</a> to resolve any dispute informally before initiating formal proceedings.
+              We encourage you to first contact us at <a href="mailto:divye2014@gmail.com" className="text-forest-green underline underline-offset-2">divye2014@gmail.com</a> to resolve any dispute informally before initiating formal proceedings.
             </p>
           </div>
 
@@ -142,7 +142,7 @@ export default function TermsPage() {
           <div>
             <h2 className="font-serif text-2xl font-light text-forest-green mb-4">13. Contact</h2>
             <p className="text-text-medium font-light leading-relaxed text-sm">
-              For any questions about these Terms, write to us at <a href="mailto:hello@saumara.com" className="text-forest-green underline underline-offset-2">hello@saumara.com</a>.
+              For any questions about these Terms, write to us at <a href="mailto:divye2014@gmail.com" className="text-forest-green underline underline-offset-2">divye2014@gmail.com</a>.
             </p>
           </div>
 
