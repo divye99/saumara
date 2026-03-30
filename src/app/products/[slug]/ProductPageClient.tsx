@@ -7,6 +7,7 @@ import { motion } from 'framer-motion'
 import { useCart } from '@/context/CartContext'
 import { Product } from '@/types'
 import { gtagEvent } from '@/components/GoogleAnalytics'
+import PDPReviews from '@/components/PDPReviews'
 import {
   ShoppingBag,
   Heart,
@@ -30,8 +31,8 @@ const categoryLabel: Record<string, string> = {
 
 const usps = [
   { icon: Leaf, label: '80%+ Natural' },
+  { icon: Award, label: 'FDA Certified' },
   { icon: Recycle, label: 'Recyclable Pack' },
-  { icon: Award, label: 'Cruelty Free' },
   { icon: Wind, label: 'Vegan' },
   { icon: Droplets, label: 'No Parabens' },
 ]
@@ -364,6 +365,16 @@ function PDPBuyBox({
             />
           </button>
         </div>
+      </div>
+
+      <div className="flex items-center gap-2.5 py-3 border-t border-cream">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" className="text-forest-green flex-shrink-0">
+          <path d="M3 12a9 9 0 1 0 18 0 9 9 0 0 0-18 0" />
+          <path d="M12 8v4l2 2" />
+        </svg>
+        <p className="text-[11px] text-text-medium font-light leading-snug">
+          Easy <span className="text-forest-green font-medium">15-day returns</span> on unopened products · No questions asked
+        </p>
       </div>
 
       <div className="flex items-center gap-2.5 py-3.5 border-y border-cream mb-7">
@@ -885,6 +896,7 @@ export default function ProductPageClient({
       <PDPIngredientSpotlights keyIngredients={keyIngredients} />
       <PDPSustainabilitySection product={product} />
       <PDPSecondaryHero product={product} heroImgs={heroImgs} />
+      <PDPReviews slug={product.slug} />
       <PDPRelatedProducts product={product} relatedProducts={relatedProducts} />
       <PDPBrandStrip />
     </div>
